@@ -12,11 +12,11 @@ var djSchema = new Schema({
 	queue: [{
       title: String,
       artist: String,
-      length: String,
+      length: Number,
       url: String,
       thumbnail: String,
       timestamp: {type: Date, default: Date.now},
-      priority: Number,
+      priority: {type: Number, default: 0},
       sid: ObjectId
   }]
 });

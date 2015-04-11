@@ -19,8 +19,8 @@ router.get('/users', function(req, res, next) {
 
 router.get('/users/add', function(req, res, next) {
 	var dj1 = new dj;
-	dj.username = 'jo';
-	dj.save(function(err){
+	dj1.username = 'jo';
+	dj1.save(function(err){
 		if(err){
 			return res.send(err);
 		}
