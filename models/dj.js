@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
-var ObjectId = mongoose.Schema.Types.ObjectID;
-var bcrypt   = require('bcrypt-nodejs');
+var ObjectId = mongoose.Schema.ObjectId;
+// var bcrypt   = require('bcrypt-nodejs');
 
 var Schema=mongoose.Schema;
  
@@ -8,27 +8,26 @@ var djSchema = new Schema({
 	email: String,
   username: String,
   password: String,
-  downvoteThreshold: {Boolean, Number},
-	queue: [
-    song:{
+  downvoteThreshold: {enabled: Boolean, threshold: Number},
+	queue: [{
       title: String,
       artist: String,
       length: String,
       url: String,
       thumbnail: String,
-      timestamp: Date.now,
+      timestamp: {type: Date, default: Date.now},
       priority: Number,
-      sid: ObjectID
+      sid: ObjectId
   }]
 });
 
-// generating a hash
-djSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};
+// // generating a hash
+// djSchema.methods.generateHash = function(password) {
+//     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+// };
 
-djSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.password);
-};
+// djSchema.methods.validPassword = function(password) {
+//     return bcrypt.compareSync(password, this.password);
+// };
  
 module.exports = mongoose.model('DJ', djSchema);

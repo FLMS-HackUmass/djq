@@ -14,7 +14,7 @@ router.get('/users', function(req, res, next) {
 			return res.send(err);
 		}
 		res.render('index', { title: result });
-	}
+	});
 });
 
 router.get('/users/add', function(req, res, next) {
@@ -27,6 +27,6 @@ router.get('/users/add', function(req, res, next) {
 		res.render('index', { title: 'added jo!' });
 	});
 	console.log('added new user jo!');
-}
+});
 
 module.exports = router;
