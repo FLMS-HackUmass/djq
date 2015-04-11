@@ -1,4 +1,4 @@
-var app = angluar.module('djq', ['ui.router']);
+var app = angular.module('djq', ['ui.router']);
 
 app.factory('songs', function(){
 	var o = {
@@ -13,5 +13,27 @@ app.config([
 	function($stateProvider, $urlRouterProvider) {
 
 		$stateProvider
-			.state('')
-	}])
+			.state('home', {
+				url: '/home',
+				templateUrl: '/home.html',
+				controller: 'MainCtrl'
+			});
+
+		$stateProvider
+			.state('test', {
+				url: '/user/testuser',
+				templateUrl: '/user.html',
+				controller: 'UserCtrl'
+			});
+		
+		$urlRouterProvider.otherwise('home');
+	}
+]);
+
+app.controller('UserCtrl', [
+	'$scope',
+	'$stateParams',
+	'users',
+	function($scope, $stateParams, users) {
+		
+	}]);
