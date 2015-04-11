@@ -7,6 +7,12 @@ a {
  	color: #00B7FF;
 }
 
+.img-responsive {
+ display: block;
+ height: auto;
+ max-width: 35%;
+}
+
 #main-title {
 	font-size: 30px;
 }
