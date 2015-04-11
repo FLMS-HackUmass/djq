@@ -27,7 +27,8 @@ app.use('/', routes);
 app.use('/users', users);
 
 //mongo
-var uristring = process.env.MONGOLAB_URI;
+var uristring = process.env.MONGOLAB_URI ||
+                'mongodb://localhost/test';
 mongoose.connect(uristring, function (err, res) {
   if (err) {
   console.log ('ERROR connecting to: ' + uristring + '. ' + err);
