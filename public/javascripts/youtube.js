@@ -11,16 +11,14 @@ function onClientLoad(){
 
 function onYouTubeApiLoad(){
   console.log("onapiload");
-  //gapi.client.setApiKey('IzaSyBBo5HKKMfIQIzeTw9GUt5RMs1-M8Qrd78');
-  gapi.client.setApiKey('IzaSyBBHxBJ7XlOcqvaStxp8AjOisyXP0T8BDg');
-  //gapi.client.setApiKey('poo');
+  gapi.client.setApiKey('AIzaSyCGYJ3Qyz27hn0MKT7CSHlf7l9kB-qkLgY');
   search();
 }
 
 function search(){
   console.log("search");
   var req = gapi.client.youtube.search.list({
-    part: 'id'
+    part: 'snippet'
   });
 
   req.execute(onSearchResponse);
@@ -28,5 +26,6 @@ function search(){
 
 function onSearchResponse(response) {
   console.log("onsearchresponse");
+  console.log(response);
   showResponse(response);
 }
