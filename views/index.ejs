@@ -70,9 +70,10 @@
 	      <div class="now-playing">
 	        <h1>Now Playing</h1>
 	          <div class="container" style="display:inline">
-	            <img id="thumb" class="img-responsive img-rounded" src="" width="150" height="150"> </img>
 	              <div><h5>Title: {{song.title}}</h5></div>
-	              <iframe id="frame" src="" frameborder="0"></iframe>
+	              <div class="embed-responsive embed-responsive-16by9">
+	              	<iframe id="frame" class="embed-responsive-item" src="" frameborder="0"></iframe>
+	              </div>
 	          </div> 
 	      </div>
 
@@ -134,8 +135,8 @@
 		    </div>
 		    <!--end of panel-->
 
-        <button id="remove" ng-click="popSong()">Pop Song</button>
-        <button id="playing" ng-click="getPlaying()">Get Playing</button>
+        <button id="remove" class="btn btn-danger" ng-click="popSong()">Play Next Song</button>
+        <button id="playing" class="btn btn-danger" ng-click="getPlaying()">Get Playing</button>
 
 		    
 
