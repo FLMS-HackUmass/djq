@@ -18,7 +18,7 @@
 
   	<!-- DO NOT MODIFY (FOR NOW) -->
   	<div class="row">
-  		<div class="col-md-4">
+  		<div class="col-md-2 col-md-offset-2">
   			<ui-view></ui-view>
   		</div>
   	</div>
@@ -57,7 +57,7 @@
 	        </div>
 	        <div id="navbar" class="collapse navbar-collapse">
 	          <ul class="nav navbar-nav">
-	            <li class="active"><a href="">{{username}}</a></li>
+	            <li class="active" id='username'><a href="">{{username}}</a></li>
 	          </ul>
 	        </div><!--/.nav-collapse -->
 	      </div>
@@ -68,14 +68,12 @@
 	    <div class="container">
 
 	      <div class="now-playing">
-	        <h1>Now Playing</h1>
 	          <div class="container" style="display:inline">
-	        
-                        <iframe id="player" width="150" height="150" src="https://www.youtube.com/watch?v=a1Y73sPHKxw" frameborder="0"></iframe>    
-		
-			<img class="img-responsive img-rounded" src="http://s3.amazonaws.com/rapgenius/kanye-west-graduation-album-cover.jpeg" width="150" height="150"> </img>
-	              <div><h5>Title: Stronger</h5></div>
-	              <div><h5>Length: 3:36</h5></div>
+
+	              <div class="embed-responsive embed-responsive-16by9">
+	              	<iframe id="frame" class="embed-responsive-item" src="" frameborder="0"></iframe>
+	              </div>
+
 	          </div> 
 	      </div>
 
@@ -87,25 +85,46 @@
 		              <b>The Queue</b>
 		            </div>
 		            <button class="btn btn-default pull-right" type="button">
+		            	<span class="glyphicon glyphicon-refresh" ng-click="refresh()"></span> 
+		            </button>
+		            <button class="btn btn-default pull-right" type="button" data-toggle="modal" data-target=".search-songs">
 		               <span class="glyphicon glyphicon-plus"></span> 
 		            </button>
 		        </div>
+
+		        <!--start modal-->
+				<div class="modal fade search-songs" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div id="yt-search-songs" class="modal-content">
+							<!--start search-->
+							<div id="search" class="form-group" ng-click="mousePressed()" >
+								<input class="search-query form-control" type="text" id="searchbar" name="song_search" placeholder="Search for a song here." ng-keyup="keyPress()">
+								<ul id="results" class="list-group" data-dismiss="modal">
+
+								</ul>
+							</div>
+							<!--end search-->
+						</div>
+					</div>
+				</div>
+				<!--end modal-->
+
 		        <div class="panel-body">
 		            <!--table-->
 		            <table class="table table-striped">
 		                <thead>
 		                    <tr>
 		                        <!--th>#</th-->
+		                        <th class="col-md-1"></th>
 		                        <th class="col-md-2">Song</th>
-		                        <th class="col-md-1">Length</th>
 		                        <th class="col-md-1 text-right">Priority</th>
 		                    </tr>
 		                </thead>
 		                <tbody>
 		                    <tr ng-repeat="song in queue">
 		                        <!--td>{{song.$index + 1}}</td-->
+		                        <td><img src="{{song.thumbnail}}" height="50"/></td>
 		                        <td>{{song.title}}</td>
-		                        <td>{{song.length}}</td>
 		                        <td align="right">
 		                          <span id="upvote" class="glyphicon glyphicon-chevron-up" ng-click="upvoteSong(song)"></span>
 		                            {{song.priority}}
@@ -119,17 +138,9 @@
 		    </div>
 		    <!--end of panel-->
 
-        <button id="remove" ng-click="popSong()">Pop Song</button>
-        <button id="playing" ng-click="getPlaying()">Get Playing</button>
+        <button id="remove" class="btn btn-danger" ng-click="popSong()">Play Next Song</button>
 
-		    <!--start search-->
-		    <div id="search" class="form-group">
-		    	<label for="searchbar">Add a song!</label>
-			    <input type="text" id="searchbar" name="song_search" placeholder="Search for a song here." ng-keyup="keyPress()">
-				<ul id="results" class="list-group">
-				</ul>
-			</div>
-			<!--end search-->
+		    
 
 	    </div><!-- /.container -->
 	</script> 
