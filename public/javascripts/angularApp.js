@@ -119,6 +119,14 @@ app.controller('UsersCtrl', [
 	function($scope, $stateParams, queue) {
 		$scope.username = $stateParams.username;
 		$scope.queue = queue.queue;
+		$scope.keyPress = function() {
+			console.log($('#searchbar').val());
+			if ($('#searchbar').val() === '') {
+				$('#results').empty();
+			} else {
+				search($('#searchbar').val());
+			}
+		}
 
 		$scope.addSong = function() {
 			var song = {title: 		$scope.title,

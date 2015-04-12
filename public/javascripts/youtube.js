@@ -45,12 +45,17 @@ function showResponse(response){
    // console.log(songPicker[co.toString()]);
     co++;
   });
-  console.log(songPicker);
+  //console.log(songPicker);
   chooseSong(songPicker);  
 
 }
 
 function chooseSong( songs ){
+  
+  if(!songs || songs === undefined) {
+    return;
+  }
+
   var t;
   for(t = 0; t < 5; t++){
     $("#results").append("<li>"+songs[t.toString()].title+"</li>");
@@ -58,7 +63,7 @@ function chooseSong( songs ){
   $("#results > li").click(function(){
     var index = $("#results > li").index(this);
     myapp.songlist.push(songs[index.toString()]);
-    console.log(myapp.songlist);
+    //console.log(myapp.songlist);
   });
 }
 
