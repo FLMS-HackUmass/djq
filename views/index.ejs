@@ -1,25 +1,70 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>djQ</title>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="/javascripts/youtube.js"></script>
     <script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
-
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+  	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+  	<script src="/javascripts/angularApp.js"></script>
+  	<base href="/">
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <a href="/add">Add a song!</a>
-    <button id="add_button">Add Song In Page</button>
+  
+  <body ng-app="djq">
 
+  	<div class="row">
+  		<div class="col-md-6 col-md-offset-3">
+  			<ui-view></ui-view>
+  		</div>
+  	</div>
 
-    <div id="dialog" title="Add a New Song" style="border:2px solid black"> 
+  	<script type="text/ng-template" id="/home.html">
+  		<div class="page-header">
+  			<h1>djQ</h1>
+  		</div>
+
+  		<div ng-repeat="user in users">
+  			<a href="/{{user.username}}">{{user.username}}</a>
+  		</div>
+
+  		<form ng-submit="addDj()">
+  			<input type="text" ng-model="username"></input>
+  			<input type="password" ng-model="password"></input>
+        <input type="text" ng-model="email"></input>
+  			<button type="submit">Submit</button>
+  		</form>
+  	</script>
+
+  	<script type="text/ng-template" id="/dj.html">
+      <div class="page-header">
+        <h1>{{username}}</h1>
+      </div>
+
+      <div ng-repeat="song in queue">
+        <a ng-click="upvoteSong(song)">{{song.title}} - {{song.priority}}</a>
+      </div>
+
+      <form ng-submit="addSong()">
+        <input type="text" ng-model="title"></input>
+        <input type="number" ng-model="length"></input>
+        <input type="text" ng-model="url"></input>
+        <input type="text" ng-model="thumbnail"></input>
+        <button type="submit">Submit</button>
+      </form>
+
+      <a href="/add">Add a song!</a>
+      <button id="add_button">Add Song In Page</button>
+
+      <div id="dialog" title="Add a New Song" style="border:2px solid black"> 
       <input type="text" id="searchbar" name="song_search" size=45>
       <ul id="results"></ul>
     </div>
+  	</script>
   </body>
 </html>
