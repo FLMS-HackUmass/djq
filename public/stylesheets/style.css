@@ -8,9 +8,9 @@ a {
 }
 
 .img-responsive {
-display: block;
-height: auto;
-max-width: 35%;
+	display: block;
+	height: auto;
+	max-width: 35%;
 }
 
 .now-playing img{
@@ -30,4 +30,9 @@ max-width: 35%;
 #downvote {
 	cursor: pointer;
 	margin-left: 10px;
+}
+
+#nav-container {
+	float: left;
+	margin-left: 20px;
 }
