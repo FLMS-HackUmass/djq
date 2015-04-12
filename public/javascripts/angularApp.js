@@ -136,12 +136,9 @@ app.controller('UsersCtrl', [
 			}
 		}
 
-		$scope.addSong = function(song) {
-			queue.addSong($scope.username, song);
-
-			$scope.title		= '';
-			$scope.url 			= '';
-			$scope.thumbnail	= '';
+		$scope.addSong = function(title) {
+			console.log(title);
+			//queue.addSong($scope.username, song);
 		}
 
 		$scope.upvoteSong = function(song) {

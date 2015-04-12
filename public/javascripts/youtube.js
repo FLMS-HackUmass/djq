@@ -33,7 +33,6 @@ function showResponse(response){
   var co = 0;
   res.forEach(function(video){
     var djObj ={};
-    console.log(video);
     djObj.title    = video.snippet.title;
     djObj.url      = video.id.videoId;
     djObj.thumbnail = video.snippet.thumbnails.default.url; 
@@ -58,11 +57,10 @@ function chooseSong( songs ){
 
   var t;
   for(t = 0; t < 5; t++){
-    console.log(songs[t]);
-    $("#results").append("<a href='http://youtube.com/watch?v=" + songs[t.toString()].url + "' target='_blank'" 
-      +" class='list-group-item' ng-click='addSong(" + songs[t.toString()] + ")'>"
-      +"<img class='search-result img-thumbnail img-responsive' src='" + songs[t.toString()].thumbnail + "''>"
-      +songs[t.toString()].title
+    var song = songs[t.toString()];
+    $("#results").append("<a class='list-group-item' ng-click='addSong(" + song + ")'>"
+      +"<img class='search-result img-thumbnail img-responsive' src='" + song.thumbnail + "''>"
+      +song.title
       +"</a>");
   }
   $("#results > li").click(function(){
