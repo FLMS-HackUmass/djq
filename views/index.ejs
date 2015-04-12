@@ -7,35 +7,45 @@
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
-	<script src="/javascripts/angularApp.js"></script>
+  	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+  	<script src="/javascripts/angularApp.js"></script>
+  	<base href="/">
   </head>
-  <body ng-app="djq">
-  	<div class="row">
-		<div class="col-md-6 col-md-offset-3">
-			<ui-view></ui-view>
-		</div>
-	</div>
-  	<script type="text/ng-template" id="/home.html">
-		<nav class="navbar navbar-inverse navbar-fixed-top">
-			<div class="container">
-				<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				</button>
-				<a id="main-title" class="navbar-brand" href="#">djQ</a>
-				</div>
-				<div id="navbar" class="collapse navbar-collapse">
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">Home</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</script>
+  
+  <body ng-app="djq" ng-controller="MainCtrl">
 
+  	<div class="row">
+  		<div class="col-md-6 col-md-offset-3">
+  			<ui-view></ui-view>
+  		</div>
+  	</div>
+
+  	<script type="text/ng-template" id="/home.html">
+  		<div class="page-header">
+  			<h1>djQ</h1>
+  		</div>
+
+  		<div ng-repeat="user in users">
+  			<a href="/users/{{$index}}">{{user.name}}</a>
+  		</div>
+
+  		<form ng-submit="addUser()">
+  			<input type="text" ng-model="name"></input>
+  			<input type="password" ng-model="password"></input>
+  			<button type="submit">Submit</button>
+  		</form>
+  	</script>
+
+  	<script type="text/ng-template" id="/users.html">
+  		<div class="page-header">
+  			<h3>
+  				{{user.name}}
+  			</h3>
+  		</div>
+
+  		<div ng-repeat="song in user.songs | orderBy:'-upvotes'">
+  			{{song.upvotes}} - {{song.title}}
+  		</div>
+  	</script>
   </body>
 </html>
