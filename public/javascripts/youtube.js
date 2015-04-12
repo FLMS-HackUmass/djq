@@ -1,6 +1,8 @@
 var myapp = { songlist: [] };
 
 $(document).ready(function(){
+    
+   $("#player")
 
   /*$('#searchbar').keypress(function(){
       console.log($('#searchbar').val());
@@ -24,6 +26,19 @@ $(document).ready(function(){
  
 
 });
+var player;
+function onYouTubeIframeAPIReady() {
+  alert("done");
+  player = new YT.Player('player', {
+    height: '390',
+    width: '640',
+    videoId: 'M7lc1UVf-VE',
+    events: {
+      'onReady': onPlayerReady,
+      'onStateChange': onPlayerStateChange
+    }
+  });
+}
 
 function showResponse(response){
   $('#results').empty();
@@ -93,3 +108,5 @@ function onSearchResponse(response) {
 //  console.log(response);
   showResponse(response);
 }
+
+
