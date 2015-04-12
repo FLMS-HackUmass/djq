@@ -18,7 +18,7 @@
 
   	<!-- DO NOT MODIFY (FOR NOW) -->
   	<div class="row">
-  		<div class="col-md-4">
+  		<div class="col-md-2 col-md-offset-2">
   			<ui-view></ui-view>
   		</div>
   	</div>
@@ -68,9 +68,7 @@
 	    <div class="container">
 
 	      <div class="now-playing">
-	        <h1>Now Playing</h1>
 	          <div class="container" style="display:inline">
-	              <div><h5>Title: {{song.title}}</h5></div>
 	              <div class="embed-responsive embed-responsive-16by9">
 	              	<iframe id="frame" class="embed-responsive-item" src="" frameborder="0"></iframe>
 	              </div>
@@ -112,16 +110,16 @@
 		                <thead>
 		                    <tr>
 		                        <!--th>#</th-->
+		                        <th class="col-md-1"></th>
 		                        <th class="col-md-2">Song</th>
-		                        <th class="col-md-1">Length</th>
 		                        <th class="col-md-1 text-right">Priority</th>
 		                    </tr>
 		                </thead>
 		                <tbody>
 		                    <tr ng-repeat="song in queue">
 		                        <!--td>{{song.$index + 1}}</td-->
+		                        <td><img src="{{song.thumbnail}}" height="50"/></td>
 		                        <td>{{song.title}}</td>
-		                        <td>{{song.length}}</td>
 		                        <td align="right">
 		                          <span id="upvote" class="glyphicon glyphicon-chevron-up" ng-click="upvoteSong(song)"></span>
 		                            {{song.priority}}
