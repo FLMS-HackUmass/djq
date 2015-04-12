@@ -2,22 +2,6 @@ var express = require('express');
 var router = express.Router();
 var DJ = require('../models/dj');
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-	res.render('index', { title: 'djq' });
-});
-
-router.get('/user/testuser' , function( req, res, next){
-	res.render('test', { title: 'TestUser'});
-});
-
-router.get('/', function (req, res, next) {
-	var query = DJ.find();
-	query.find({}).exec(function(err,result){
-		if(err) return res.send(err);
-		res.render('index', { title: result });
-	});
-});
 
 // //add jo to database
 // router.get('/users/add', function (req, res, next) {
@@ -29,6 +13,19 @@ router.get('/', function (req, res, next) {
 // 	});
 // 	console.log('added new DJ jo!');
 // });
+
+router.get('/', function (req, res, next) {
+	res.render('index', { title: 'djQ'})
+});
+
+router.get('/users', function (req, res, next) {
+	var query = DJ.find();
+	query.find({}).exec(function(err,result){
+		if(err) return res.send(err);
+		res.json(result);
+	});
+});
+
 
 //add user to database
 router.get('/users/add', function (req, res, next) {
@@ -138,7 +135,9 @@ router.get('/:username', function (req, res, next) {
 	var username = req.params.username;
 	findUserByUsername(username, function(err, dj) {
 		if (err) return res.send(err);
-		res.render('index', { title: dj.username });
+		// TODO: Double check this
+		console.log(dj.username);
+		res.render('dj', { title: dj.username });
 	});
 });
 

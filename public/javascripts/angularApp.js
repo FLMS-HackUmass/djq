@@ -1,8 +1,22 @@
 var app = angular.module('djq', ['ui.router'])
 
-app.factory('users', [function() {
+app.factory('users', ['$http', function($http) {
 	var o = {
 		users: []
+	};
+
+	o.getAll = function(){
+		return $http.get('/users').success(function(data) {
+			angular.copy(data, o.users);
+	})};
+
+	return o;
+}])
+
+// we might not need this, but are keeping it for now...
+app.factory('queue', [function() {
+	var o = {
+		queue: [{title:'hi'}]
 	};
 	return o;
 }])
@@ -15,19 +29,22 @@ app.config ([
 
 		$stateProvider
 			.state('home', {
-				url: '/home',
+				url: '/',
 				templateUrl: '/home.html',
-				controller: 'MainCtrl'
+				controller: 'MainCtrl',
+				resolve: {
+					postPromise: ['users', function(users){
+						return users.getAll();
+					}]
+				}
 			});
 
 		$stateProvider
 			.state('users', {
-				url: '/users/{id}',
-				templateUrl: '/users.html',
+				url: '/{user.username}',
+				templateUrl: '/dj.html',
 				controller: 'UsersCtrl'
 			})
-
-	$urlRouterProvider.otherwise('home');
 
 	$locationProvider.html5Mode(true);
 }]);
@@ -39,7 +56,7 @@ app.controller('MainCtrl', [
 		$scope.users = users.users
 
 		$scope.addUser = function() {
-			if (!$scope.name || $scope.name === '') { 
+			if (!$scope.username || $scope.username === '') { 
 				alert("Please enter a username!");
 				return;
 			}
@@ -49,14 +66,14 @@ app.controller('MainCtrl', [
 			}
 
 			$scope.users.push({
-				name: $scope.name,
+				username: $scope.username,
 				password: $scope.password,
-				songs: [
-					{title: 'Uptown Funk', upvotes: 0},
-					{title: 'Sandstorm', upvotes: 0}
+				queue: [
+					{title: 'Uptown Funk', priority: 0},
+					{title: 'Sandstorm', priority: 0}
 				]
 			});
-			$scope.name = '';
+			$scope.username = '';
 			$scope.password = '';
 		}
 	}]);
@@ -64,7 +81,16 @@ app.controller('MainCtrl', [
 app.controller('UsersCtrl', [
 	'$scope',
 	'$stateParams',
-	'users',
-	function($scope, $stateParams, users) {
+	'queue',
+	function($scope, $stateParams, queue) {
 		$scope.user = users.users[$stateParams.id];
+		var user;
+		user.username='stanleyrya'
+		$scope.user = user;
+		queue.push({title:'hi'});
+		$scope.queue = queue.queue;
+
+		$scope.getQueue = function() {
+			queue = $scope.queue;
+		}
 	}])

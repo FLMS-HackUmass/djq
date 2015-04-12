@@ -20,20 +20,18 @@
   		</div>
   	</div>
 
-  	<script type="text/ng-template" id="/home.html">
-  		<div class="page-header">
-  			<h1>djQ</h1>
-  		</div>
+  	<script type="text/ng-template" id="/dj.html">
+      <div class="page-header">
+        <h1>{{user.username}}</h1>
+      </div>
 
-  		<div ng-repeat="user in users">
-  			<a href="/{{user.username}}">{{user.username}}</a>
-  		</div>
+      <div ng-repeat="song in queue">
+        <a>{{song.title}}</a>
+      </div>
 
-  		<form ng-submit="addUser()">
-  			<input type="text" ng-model="username"></input>
-  			<input type="password" ng-model="password"></input>
-  			<button type="submit">Submit</button>
-  		</form>
+  		// <div ng-repeat="song in user.songs | orderBy:'-upvotes'">
+  		// 	{{song.upvotes}} - {{song.title}}
+  		// </div>
   	</script>
   </body>
 </html>
