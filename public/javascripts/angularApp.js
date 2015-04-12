@@ -29,6 +29,21 @@ app.factory('queue', ['$http', function($http) {
 			angular.copy(data.queue, o.queue);
 	})};
 
+	o.addSong = function(username, song){
+		return $http.post('/'+username+'/addSong', song).success(function(){
+			o.getAll(username);
+	})};
+
+	o.upvoteSong = function(username, song){
+		return $http.post('/'+username+'/upvoteSong', song).success(function(){
+			o.getAll(username);
+	})};
+
+	o.downvoteSong = function(username, song){
+		return $http.post('/'+username+'/downvoteSong', song).success(function(){
+			o.getAll(username);
+	})};
+
 	return o;
 }])
 
@@ -87,15 +102,15 @@ app.controller('MainCtrl', [
 					  	password: 	$scope.password,
 						email: 		$scope.email
 			};
-			
-			users.addDj(dj);
-			$scope.users.push(dj);
 
-			$scope.username = '';
+			users.addDj(dj);
+
+			$scope.username	= '';
 			$scope.password = '';
 			$scope.email 	= '';
 		}
-	}]);
+	}]
+);
 
 app.controller('UsersCtrl', [
 	'$scope',
@@ -104,4 +119,26 @@ app.controller('UsersCtrl', [
 	function($scope, $stateParams, queue) {
 		$scope.username = $stateParams.username;
 		$scope.queue = queue.queue;
-	}])
+
+		$scope.addSong = function() {
+			var song = {title: 		$scope.title,
+					  	length: 	$scope.length,
+						url: 		$scope.url,
+						thumbnail: 	$scope.thumbnail
+			};
+
+			queue.addSong($scope.username, song);
+
+			$scope.title		= '';
+			$scope.length		= '';
+			$scope.url 			= '';
+			$scope.thumbnail	= '';
+		}
+
+		$scope.upvoteSong = function(song) {
+			queue.upvoteSong($scope.username, song);
+
+			$scope.songId = '';
+		}
+	}
+]);

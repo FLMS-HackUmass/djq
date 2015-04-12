@@ -43,8 +43,16 @@
       </div>
 
       <div ng-repeat="song in queue">
-        <a href="http://{{song.url}}">{{song.title}} - {{song.priority}}</a>
+        <a ng-click="upvoteSong(song)">{{song.title}} - {{song.priority}}</a>
       </div>
+
+      <form ng-submit="addSong()">
+        <input type="text" ng-model="title"></input>
+        <input type="number" ng-model="length"></input>
+        <input type="text" ng-model="url"></input>
+        <input type="text" ng-model="thumbnail"></input>
+        <button type="submit">Submit</button>
+      </form>
   	</script>
 
   </body>
