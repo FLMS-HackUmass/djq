@@ -137,17 +137,10 @@ app.controller('UsersCtrl', [
 			}
 		}
 
-		$scope.addSong = function() {
-			var song = {title: 		$scope.title,
-					  	length: 	$scope.length,
-						url: 		$scope.url,
-						thumbnail: 	$scope.thumbnail
-			};
-
+		$scope.addSong = function(song) {
 			queue.addSong($scope.username, song);
 
 			$scope.title		= '';
-			$scope.length		= '';
 			$scope.url 			= '';
 			$scope.thumbnail	= '';
 		}
