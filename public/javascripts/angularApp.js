@@ -14,10 +14,16 @@ app.factory('users', ['$http', function($http) {
 }])
 
 // we might not need this, but are keeping it for now...
-app.factory('queue', [function() {
+app.factory('queue', ['$http', function($http) {
 	var o = {
-		queue: [{title:'hi'}]
+		queue: []
 	};
+
+	o.getAll = function(username){
+		return $http.get('/users/' + username).success(function(data) {
+			angular.copy(data.queue, o.queue);
+	})};
+
 	return o;
 }])
 
@@ -37,14 +43,18 @@ app.config ([
 						return users.getAll();
 					}]
 				}
-			});
-
-		$stateProvider
-			.state('users', {
-				url: '/{user.username}',
-				templateUrl: '/dj.html',
-				controller: 'UsersCtrl'
 			})
+
+			.state('users', {
+				url: '/:username',
+				templateUrl: '/dj.html',
+				controller: 'UsersCtrl',
+				resolve: {
+					postPromise: ['$stateParams', 'queue', function($stateParams, queue) {
+						return queue.getAll($stateParams.username);
+					}]
+				}
+			});
 
 	$locationProvider.html5Mode(true);
 }]);
@@ -83,14 +93,6 @@ app.controller('UsersCtrl', [
 	'$stateParams',
 	'queue',
 	function($scope, $stateParams, queue) {
-		$scope.user = users.users[$stateParams.id];
-		var user;
-		user.username='stanleyrya'
-		$scope.user = user;
-		queue.push({title:'hi'});
+		$scope.username = $stateParams.username;
 		$scope.queue = queue.queue;
-
-		$scope.getQueue = function() {
-			queue = $scope.queue;
-		}
 	}])

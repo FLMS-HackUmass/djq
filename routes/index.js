@@ -15,7 +15,7 @@ var DJ = require('../models/dj');
 // });
 
 router.get('/', function (req, res, next) {
-	res.render('index', { title: 'djQ'})
+	res.render('index')
 });
 
 router.get('/users', function (req, res, next) {
@@ -132,12 +132,15 @@ var findUserByUsername = function (username, callback) {
 };
 
 router.get('/:username', function (req, res, next) {
+	res.render('index');
+});
+
+router.get('/users/:username', function (req, res, next) {
 	var username = req.params.username;
 	findUserByUsername(username, function(err, dj) {
 		if (err) return res.send(err);
-		// TODO: Double check this
-		console.log(dj.username);
-		res.render('dj', { title: dj.username });
+		console.log(dj);
+		res.json(dj);
 	});
 });
 
