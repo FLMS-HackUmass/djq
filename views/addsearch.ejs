@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="/javascripts/youtube.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
+
+
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Add a Song!</p>
+    <form>
+    <input type="text" id="searchbar" name="song_search" size=100>
+    </form>
+    <ul id="results"></ul>
+  </body>
+</html>
