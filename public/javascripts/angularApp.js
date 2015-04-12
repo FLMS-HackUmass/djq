@@ -21,7 +21,8 @@ app.factory('users', ['$http', function($http) {
 // we might not need this, but are keeping it for now...
 app.factory('queue', ['$http', function($http) {
 	var o = {
-		queue: []
+		queue: [],
+		playing: {}
 	};
 
 	o.getAll = function(username){
@@ -31,6 +32,12 @@ app.factory('queue', ['$http', function($http) {
 
 	o.addSong = function(username, song){
 		return $http.post('/'+username+'/addSong', song).success(function(){
+			o.getAll(username);
+	})};
+
+	o.popSong = function(username){
+		return $http.post('/'+username+'/popSong').success(function(data){
+			o.playing = data;
 			o.getAll(username);
 	})};
 
@@ -119,6 +126,8 @@ app.controller('UsersCtrl', [
 	function($scope, $stateParams, queue) {
 		$scope.username = $stateParams.username;
 		$scope.queue = queue.queue;
+		$scope.playing = queue.playing;
+
 		$scope.keyPress = function() {
 			console.log($('#searchbar').val());
 			if ($('#searchbar').val() === '') {
@@ -152,6 +161,14 @@ app.controller('UsersCtrl', [
 		$scope.downvoteSong = function(song) {
 			queue.downvoteSong($scope.username, song);
 			$scope.songId = '';
+		}
+
+		$scope.popSong = function() {
+			queue.popSong($scope.username);
+		}
+
+		$scope.getPlaying = function() {
+			console.log(queue.playing);
 		}
 	}
 ]);
