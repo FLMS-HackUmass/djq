@@ -45,6 +45,10 @@ router.get('/', function (req, res, next) {
 	res.render('index');
 });
 
+router.get('/testuser', function(req, res, next) {
+	res.render('test');
+});
+
 //get all users
 router.get('/users', function (req, res, next) {
 	var query = DJ.find();
