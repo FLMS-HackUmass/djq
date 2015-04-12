@@ -37,11 +37,16 @@ app.factory('queue', ['$http', function($http) {
 
 	o.popSong = function(username){
 		return $http.post('/'+username+'/popSong').success(function(data){
+			console.log(calling pop);
 			o.playing = data;
-			$('#frame').attr("src", "https://www.youtube.com/embed/" 
-				+ data.url + "?autoplay=1");
-			$('#thumb').attr("src", data.thumbnail);
+			// $('#frame').attr("src", "https://www.youtube.com/embed/" 
+			// 	+ data.url + "?autoplay=1");
+			// $('#thumb').attr("src", data.thumbnail);
 			o.getAll(username);
+
+			onYouTubeIframeAPIReady();
+			changeVideo(app);
+			playVideo();
 	})};
 
 	o.upvoteSong = function(username, song){
@@ -56,6 +61,10 @@ app.factory('queue', ['$http', function($http) {
 
 	return o;
 }])
+
+app.injector(['ng', 'djq']).invoke(function(queue){
+	queue.popSong();
+})
 
 app.config ([
 	'$stateProvider',
