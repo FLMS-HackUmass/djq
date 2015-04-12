@@ -1,4 +1,4 @@
-var app = angular.module('djq', ['ui.router'])
+var app = angular.module('djq', ['ui.router', 'btford.socket-io'])
 
 app.factory('users', ['$http', function($http) {
 	var o = {
@@ -46,6 +46,10 @@ app.factory('queue', ['$http', function($http) {
 
 	return o;
 }])
+
+app.factory('mySocket', function(socketFactory){
+	return socketFactory();
+})
 
 app.config ([
 	'$stateProvider',
@@ -116,7 +120,8 @@ app.controller('UsersCtrl', [
 	'$scope',
 	'$stateParams',
 	'queue',
-	function($scope, $stateParams, queue) {
+	'mySocket'
+	function($scope, $stateParams, queue, mySocket) {
 		$scope.username = $stateParams.username;
 		$scope.queue = queue.queue;
 
@@ -133,6 +138,8 @@ app.controller('UsersCtrl', [
 			$scope.length		= '';
 			$scope.url 			= '';
 			$scope.thumbnail	= '';
+
+			mySocket.emit('update')
 		}
 
 		$scope.upvoteSong = function(song) {
@@ -140,5 +147,8 @@ app.controller('UsersCtrl', [
 
 			$scope.songId = '';
 		}
+
+		$scope.$on('socket:update', function (ev, data) {
+    });
 	}
 ]);

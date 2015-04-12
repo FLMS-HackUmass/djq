@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var http = require('http');
+var socketio = require('socket.io')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -69,5 +71,10 @@ app.use(function(err, req, res, next) {
     });
 });
 
+//link socket.io
+var server = http.createServer(app);
+var io = socketio.listen(server);
+app.set('socketio', io);
+app.set('server', server);
 
 module.exports = app;
