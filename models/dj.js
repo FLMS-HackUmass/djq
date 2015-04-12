@@ -11,7 +11,6 @@ var djSchema = new Schema({
   downvoteThreshold: {enabled: Boolean, threshold: Number},
 	queue: [{
       title: String,
-      // length: Number,
       url: String,
       thumbnail: String,
       timestamp: {type: Date, default: Date.now},
