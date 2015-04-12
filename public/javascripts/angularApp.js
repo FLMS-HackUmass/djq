@@ -38,6 +38,9 @@ app.factory('queue', ['$http', function($http) {
 	o.popSong = function(username){
 		return $http.post('/'+username+'/popSong').success(function(data){
 			o.playing = data;
+			$('#frame').attr("src", "https://www.youtube.com/embed/" 
+				+ data.url + "?autoplay=1");
+			$('#thumb').attr("src", data.thumbnail);
 			o.getAll(username);
 	})};
 
