@@ -9,6 +9,9 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
   	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
   	<script src="/javascripts/angularApp.js"></script>
+    <script src="/javascripts/youtube.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   	<base href="/">
   </head>
   <body ng-app="djq">
@@ -112,6 +115,15 @@
 		        </div>
 		    </div>
 		    <!--end of panel-->
+
+		    <!--start search-->
+		    <div id="search" class="form-group">
+		    	<label for="searchbar">Add a song!</label>
+			    <input type="text" id="searchbar" name="song_search" placeholder="Search for a song here.">
+				<ul id="results">
+				</ul>
+			</div>
+			<!--end search-->
 
 	    </div><!-- /.container -->
 	</script> 

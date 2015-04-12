@@ -5,10 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-
+//ROUTES
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
+var addsearch = require('./routes/addsearch');
 var app = express();
 
 // view engine setup
@@ -26,6 +26,7 @@ app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/add', addsearch);
 
 //mongo
 var uristring = process.env.MONGOLAB_URI ||
