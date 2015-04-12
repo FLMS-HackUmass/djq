@@ -29,9 +29,10 @@
   			<a href="/{{user.username}}">{{user.username}}</a>
   		</div>
 
-  		<form ng-submit="addUser()">
+  		<form ng-submit="addDj()">
   			<input type="text" ng-model="username"></input>
   			<input type="password" ng-model="password"></input>
+        <input type="text" ng-model="email"></input>
   			<button type="submit">Submit</button>
   		</form>
   	</script>

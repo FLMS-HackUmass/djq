@@ -10,6 +10,11 @@ app.factory('users', ['$http', function($http) {
 			angular.copy(data, o.users);
 	})};
 
+	o.addDj = function(dj){
+		return $http.post('/users/add', dj).success(function(data){
+			o.users.push(data);
+	})};
+
 	return o;
 }])
 
@@ -65,7 +70,7 @@ app.controller('MainCtrl', [
 	function($scope, users) {
 		$scope.users = users.users
 
-		$scope.addUser = function() {
+		$scope.addDj = function() {
 			if (!$scope.username || $scope.username === '') { 
 				alert("Please enter a username!");
 				return;
@@ -74,17 +79,21 @@ app.controller('MainCtrl', [
 				alert("Please enter a password!");
 				return;
 			}
+			if (!$scope.email || $scope.email === '') { 
+				alert("Please enter an email!");
+				return;
+			}
+			var dj = {	username: 	$scope.username,
+					  	password: 	$scope.password,
+						email: 		$scope.email
+			};
+			
+			users.addDj(dj);
+			$scope.users.push(dj);
 
-			$scope.users.push({
-				username: $scope.username,
-				password: $scope.password,
-				queue: [
-					{title: 'Uptown Funk', priority: 0},
-					{title: 'Sandstorm', priority: 0}
-				]
-			});
 			$scope.username = '';
 			$scope.password = '';
+			$scope.email 	= '';
 		}
 	}]);
 

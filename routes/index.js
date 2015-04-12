@@ -37,7 +37,7 @@ router.post('/users/add', function (req, res, next) {
 	var dj = new DJ(req.body);
 	dj.save(function(err){
 		if(err) return res.send(err);
-		res.redirect('/'+dj.username, { title: 'added new DJ ' + dj.username + '!' });
+		res.redirect('/'+dj.username);
 	});
 	console.log('added new DJ ' + dj.username + '!');
 });
