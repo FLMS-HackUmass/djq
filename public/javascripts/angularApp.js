@@ -146,7 +146,10 @@ app.controller('UsersCtrl', [
 			$('#results').hide();
 			$('#searchbar').val('');
 			queue.getAll($scope.username);
+		}
 
+		$scope.refresh = function() {
+			queue.getAll($scope.username);
 		}
 
 		$scope.addSong = function(index) {
