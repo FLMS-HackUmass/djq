@@ -20,7 +20,7 @@ $(document).ready(function(){
 
   $("#add_button").click(function(){
     //console.log(myapp.songlist); 
-    $( "#dialog" ).dialog( "open" );
+    $("#dialog").show("slide", { direction: "right" }, 1000);  
   });
  
 //  $('#add_button').click(function(){
