@@ -98,6 +98,22 @@ router.post('/:username/addSong', function (req, res, next) {
 	});
 });
 
+//pop song from queue
+router.post('/:username/popSong', function (req, res, next) {
+	var username = req.params.username;
+	findUserByUsername(username, function(err, dj) {
+		if (err) return res.send(err);
+
+		var queue = dj.queue;
+		var song = queue.shift(song);
+
+		dj.save(function(err,result){
+			if(err) return res.send(err);
+			res.json(song);
+		});
+	});
+});
+
 //upvote song in queue
 router.post('/:username/upvoteSong', function (req, res, next) {
 	var username = req.params.username;
@@ -116,6 +132,7 @@ router.post('/:username/upvoteSong', function (req, res, next) {
 	});
 });
 
+//downvote song in queue
 router.post('/:username/downvoteSong', function (req, res, next) {
 	var username = req.params.username;
 	findUserByUsername(username, function(err, dj) {

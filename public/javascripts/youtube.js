@@ -1,7 +1,6 @@
 var myapp = { songlist: [] };
 
 $(document).ready(function(){
-  console.log("The doc is ready");
 
   /*$('#searchbar').keypress(function(){
       console.log($('#searchbar').val());
