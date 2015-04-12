@@ -57,7 +57,7 @@
 	        </div>
 	        <div id="navbar" class="collapse navbar-collapse">
 	          <ul class="nav navbar-nav">
-	            <li class="active"><a href="">{{username}}</a></li>
+	            <li class="active" id='username'><a href="">{{username}}</a></li>
 	          </ul>
 	        </div><!--/.nav-collapse -->
 	      </div>
@@ -83,10 +83,28 @@
 		            <div class="panel-title pull-left">
 		              <b>The Queue</b>
 		            </div>
-		            <button class="btn btn-default pull-right" type="button">
+		            <button class="btn btn-default pull-right" type="button" data-toggle="modal" data-target=".search-songs">
 		               <span class="glyphicon glyphicon-plus"></span> 
 		            </button>
 		        </div>
+
+		        <!--start modal-->
+				<div class="modal fade search-songs" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div id="yt-search-songs" class="modal-content">
+							<!--start search-->
+							<div id="search" class="form-group" ng-click="mousePressed()" >
+								<input class="search-query form-control" type="text" id="searchbar" name="song_search" placeholder="Search for a song here." ng-keyup="keyPress()">
+								<ul id="results" class="list-group" data-dismiss="modal">
+
+								</ul>
+							</div>
+							<!--end search-->
+						</div>
+					</div>
+				</div>
+				<!--end modal-->
+
 		        <div class="panel-body">
 		            <!--table-->
 		            <table class="table table-striped">
@@ -119,14 +137,7 @@
         <button id="remove" ng-click="popSong()">Pop Song</button>
         <button id="playing" ng-click="getPlaying()">Get Playing</button>
 
-		    <!--start search-->
-		    <div id="search" class="form-group">
-		    	<label for="searchbar">Add a song!</label>
-			    <input type="text" id="searchbar" name="song_search" placeholder="Search for a song here." ng-keyup="keyPress()">
-				<ul id="results" class="list-group">
-				</ul>
-			</div>
-			<!--end search-->
+		    
 
 	    </div><!-- /.container -->
 	</script> 

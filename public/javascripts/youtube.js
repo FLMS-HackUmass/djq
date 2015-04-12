@@ -45,10 +45,9 @@ function showResponse(response){
     co++;
   });
   //console.log(songPicker);
-  chooseSong(songPicker);  
-
+  chooseSong(songPicker); 
 }
-
+var songz = [];
 function chooseSong( songs ){
   
   if(!songs || songs === undefined) {
@@ -58,15 +57,33 @@ function chooseSong( songs ){
   var t;
   for(t = 0; t < 5; t++){
     var song = songs[t.toString()];
-    $("#results").append("<a class='list-group-item' ng-click='addSong(" + song + ")'>"
-      +"<img class='search-result img-thumbnail img-responsive' src='" + song.thumbnail + "''>"
+    songz[t] = song;
+    $("#results").append("<a class='list-group-item' song='"+JSON.stringify(song)+"' id='song" + t + "'>"
+      +"<img class='search-result img-thumbnail img-responsive' src='" + song.thumbnail + "'>"
       +song.title
       +"</a>");
+    
+    // $("#results").click(function(){
+    //     console.log($("#results")[t].attr('id'));
+    //   });
+    $("#song" + t).click(function(event){
+          testLog(JSON.parse($(this).attr('song')));
+    });
   }
-  $("#results > li").click(function(){
-    var index = $("#results > li").index(this);
-    myapp.songlist.push(songs[index.toString()]);
-    //console.log(myapp.songlist);
+  
+}
+
+function testLog(song) {
+  var username = window.location.href.split("/");
+  username = username[username.length-1];
+  console.log(song)
+  $.ajax({
+     type: 'POST',
+     data: song,
+     success: function() {   console.log("YAY!:" + song); },
+     error: function(){   console.log("BOO!:" + song); },
+     url: username + '/addSong/',
+     cache:false
   });
 }
 

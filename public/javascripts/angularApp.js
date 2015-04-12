@@ -121,23 +121,33 @@ app.controller('MainCtrl', [
 
 app.controller('UsersCtrl', [
 	'$scope',
+	'$compile',
 	'$stateParams',
 	'queue',
-	function($scope, $stateParams, queue) {
+	function($scope, $compile, $stateParams, queue) {
 		$scope.username = $stateParams.username;
 		$scope.queue = queue.queue;
 		$scope.playing = queue.playing;
 
 		$scope.keyPress = function() {
 			if ($('#searchbar').val() === '') {
-				$('#results').empty();
+				$('#results').hide();
 			} else {
+				$('#results').show();
 				search($('#searchbar').val());
 			}
 		}
 
-		$scope.addSong = function(title) {
-			console.log(title);
+		$scope.mousePressed = function() {
+			queue.getAll($scope.username);
+			$('#results').hide();
+			$('#searchbar').val('');
+			queue.getAll($scope.username);
+
+		}
+
+		$scope.addSong = function(index) {
+			console.log(index);
 			//queue.addSong($scope.username, song);
 		}
 

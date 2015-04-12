@@ -36,3 +36,12 @@ a {
 	float: left;
 	margin-left: 20px;
 }
+
+#results .list-group-item {
+	cursor: pointer;
+}
+
+#yt-search-songs {
+	padding: 5px;
+}
+
