@@ -1,117 +1,59 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title></title>
+    <title>djQ</title>
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/stylesheets/style.css">
-
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
-    <script src="/javascripts/angularApp.js"></script>
+  	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+  	<script src="/javascripts/angularApp.js"></script>
+  	<base href="/">
   </head>
-  <body>
+  
+  <body ng-app="djq">
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a id="main-title" class="navbar-brand" href="#">djQ</a>
+  	<div class="row">
+  		<div class="col-md-6 col-md-offset-3">
+  			<ui-view></ui-view>
+  		</div>
+  	</div>
 
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="">Test User</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+  	<script type="text/ng-template" id="/home.html">
+  		<div class="page-header">
+  			<h1>djQ</h1>
+  		</div>
 
-    <div class="container">
+  		<div ng-repeat="user in users">
+  			<a href="/{{user.username}}">{{user.username}}</a>
+  		</div>
 
-      <div class="now-playing">
-        <h1>Now Playing</h1>
-          <div class="container" style="display:inline">
-            <img class="img-responsive img-rounded" src="http://s3.amazonaws.com/rapgenius/kanye-west-graduation-album-cover.jpeg" width="150" height="150"> </img>
-              <div><h5>Title: Stronger</h5></div>
-              <div><h5>Length: 3:36</h5></div>
-          </div> 
+  		<form ng-submit="addDj()">
+  			<input type="text" ng-model="username"></input>
+  			<input type="password" ng-model="password"></input>
+        <input type="text" ng-model="email"></input>
+  			<button type="submit">Submit</button>
+  		</form>
+  	</script>
+
+  	<script type="text/ng-template" id="/dj.html">
+      <div class="page-header">
+        <h1>{{username}}</h1>
       </div>
 
-          <!--panel-->
-    <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading clearfix">
-            <div class="panel-title pull-left">
-              <b>The Queue</b>
-            </div>
-            <button class="btn btn-default pull-right" type="button">
-               <span class="glyphicon glyphicon-plus"></span> 
-            </button>
-        </div>
-        <div class="panel-body">
-            <!--table-->
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Song</th>
-                        <th>Length</th>
-                        <th class="text-right">Priority</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Uptown Funk</td>
-                        <td>3:34</td>
-                        <td align="right">
-                          <button class="btn btn-default" type="button"> <span class="glyphicon glyphicon-chevron-up"></span> </button>
-                            11
-                          <button class="btn btn-default" type="button"> <span class="glyphicon glyphicon-chevron-down"></span> </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Sandstorm</td>
-                        <td>5:65</td>
-                        <td align="right">
-                           <button class="btn btn-default" type="button"> <span class="glyphicon glyphicon-chevron-up"></span> </button>
-                            6
-                          <button class="btn btn-default" type="button"> <span class="glyphicon glyphicon-chevron-down"></span> </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Thinking Out Loud</td>
-                        <td>4:26</td>
-                        <td align="right">
-                           <button class="btn btn-default" type="button"> <span class="glyphicon glyphicon-chevron-up"></span> </button>
-                            3
-                          <button class="btn btn-default" type="button"> <span class="glyphicon glyphicon-chevron-down"></span> </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <!--end of table-->
-        </div>
-    </div>
-    <!--end of panel-->
+      <div ng-repeat="song in queue">
+        <a ng-click="upvoteSong(song)">{{song.title}} - {{song.priority}}</a>
+      </div>
 
-    </div><!-- /.container -->
+      <form ng-submit="addSong()">
+        <input type="text" ng-model="title"></input>
+        <input type="number" ng-model="length"></input>
+        <input type="text" ng-model="url"></input>
+        <input type="text" ng-model="thumbnail"></input>
+        <button type="submit">Submit</button>
+      </form>
+  	</script>
 
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    
-<body ng-app="djq">
-	
-</body>
+  </body>
 </html>

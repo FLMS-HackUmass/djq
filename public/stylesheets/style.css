@@ -8,11 +8,26 @@ a {
 }
 
 .img-responsive {
- display: block;
- height: auto;
- max-width: 35%;
+display: block;
+height: auto;
+max-width: 35%;
+}
+
+.now-playing img{
+    float: left;
+    margin-right: 20px;
 }
 
 #main-title {
 	font-size: 30px;
+}
+
+#upvote {
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+#downvote {
+	cursor: pointer;
+	margin-left: 10px;
 }

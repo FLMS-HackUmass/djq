@@ -140,5 +140,10 @@ app.controller('UsersCtrl', [
 
 			$scope.songId = '';
 		}
+
+		$scope.downvoteSong = function(song) {
+			queue.downvoteSong($scope.username, song);
+			$scope.songId = '';
+		}
 	}
 ]);
