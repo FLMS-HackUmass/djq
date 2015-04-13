@@ -1,4 +1,4 @@
-var app = angular.module('djq', ['ui.router'])
+var app = angular.module('djq', ['ui.router','youtube-embed'])
 
 app.factory('users', ['$http', function($http) {
 	var o = {
@@ -22,7 +22,18 @@ app.factory('users', ['$http', function($http) {
 app.factory('queue', ['$http', function($http) {
 	var o = {
 		queue: [],
-		playing: {}
+		playing:  {
+            "title": "Mark Ronson - Uptown Funk ft. Bruno Mars",
+            "url": "OPf0YbXqDm0",
+            "thumbnail": "https://i.ytimg.com/vi/OPf0YbXqDm0/default.jpg",
+            "_id": {
+                "$oid": "552adc586221bc1100777d1f"
+            },
+            "priority": 0,
+            "timestamp": {
+                "$date": "2015-04-12T20:58:00.014Z"
+            }
+        }
 	};
 
 	o.getAll = function(username){
@@ -37,16 +48,9 @@ app.factory('queue', ['$http', function($http) {
 
 	o.popSong = function(username){
 		return $http.post('/'+username+'/popSong').success(function(data){
-			console.log(calling pop);
-			o.playing = data;
-			// $('#frame').attr("src", "https://www.youtube.com/embed/" 
-			// 	+ data.url + "?autoplay=1");
-			// $('#thumb').attr("src", data.thumbnail);
+			angular.copy(data, o.playing);
+			// o.playing = data.url;
 			o.getAll(username);
-
-			onYouTubeIframeAPIReady();
-			changeVideo(app);
-			playVideo();
 	})};
 
 	o.upvoteSong = function(username, song){
@@ -61,10 +65,6 @@ app.factory('queue', ['$http', function($http) {
 
 	return o;
 }])
-
-app.injector(['ng', 'djq']).invoke(function(queue){
-	queue.popSong();
-})
 
 app.config ([
 	'$stateProvider',
@@ -141,6 +141,10 @@ app.controller('UsersCtrl', [
 		$scope.queue = queue.queue;
 		$scope.playing = queue.playing;
 
+		$scope.playerVars = {
+    		autoplay: 1
+		};
+
 		$scope.keyPress = function() {
 			if ($('#searchbar').val() === '') {
 				$('#results').hide();
@@ -163,26 +167,24 @@ app.controller('UsersCtrl', [
 
 		$scope.addSong = function(index) {
 			console.log(index);
-			//queue.addSong($scope.username, song);
 		}
 
 		$scope.upvoteSong = function(song) {
 			queue.upvoteSong($scope.username, song);
-
-			$scope.songId = '';
 		}
 
 		$scope.downvoteSong = function(song) {
 			queue.downvoteSong($scope.username, song);
-			$scope.songId = '';
 		}
 
 		$scope.popSong = function() {
-			queue.popSong($scope.username);
+			queue.popSong($scope.username,$scope);
+			console.log(queue.playing.url);
+			$scope.player.loadVideoById(queue.playing.url);
 		}
 
-		$scope.getPlaying = function() {
-			console.log(queue.playing);
-		}
+		$scope.$on('youtube.player.ended', function ($event, player) {
+    		$scope.popSong();
+  		});
 	}
 ]);
