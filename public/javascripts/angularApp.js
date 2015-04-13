@@ -179,8 +179,6 @@ app.controller('UsersCtrl', [
 
 		$scope.popSong = function() {
 			queue.popSong($scope.username,$scope);
-			console.log(queue.playing.url);
-			$scope.player.loadVideoById(queue.playing.url);
 		}
 
 		$scope.$on('youtube.player.ended', function ($event, player) {
