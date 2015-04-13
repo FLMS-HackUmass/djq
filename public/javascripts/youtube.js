@@ -1,45 +1,3 @@
-var myapp = { songlist: [] };
-
-$(document).ready(function(){
-    
-   $("#player")
-
-  /*$('#searchbar').keypress(function(){
-      console.log($('#searchbar').val());
-      search($('#searchbar').val());
-  });*/
-  
-  //document.getElementById('searchbar')
-  /*$('#dialog').dialog({
-      autoOpen:false,
-      height: 500,
-      width: 500,
-      buttons: {
-        "Add Song": function(){alert("useless");}
-      }
-    }
-  );*/
-
-  /*$("#add_button").click(function(){
-    $("#dialog").dialog("open");
-  });*/
- 
-
-});
-var player;
-function onYouTubeIframeAPIReady() {
-  alert("done");
-  player = new YT.Player('player', {
-    height: '390',
-    width: '640',
-    videoId: 'M7lc1UVf-VE',
-    events: {
-      'onReady': onPlayerReady,
-      'onStateChange': onPlayerStateChange
-    }
-  });
-}
-
 function showResponse(response){
   $('#results').empty();
   var res = response.items;
@@ -77,10 +35,6 @@ function chooseSong( songs ){
       +"<img class='search-result img-thumbnail img-responsive' src='" + song.thumbnail + "'>"
       +song.title
       +"</a>");
-    
-    // $("#results").click(function(){
-    //     console.log($("#results")[t].attr('id'));
-    //   });
     $("#song" + t).click(function(event){
           testLog(JSON.parse($(this).attr('song')));
     });
