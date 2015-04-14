@@ -9,19 +9,48 @@ a {
  	color: #00B7FF;
 }
 
+.ng-scope {
+	/* a hacky fix, angular seems to be placing an unwanted href in
+	here that is causing some questionable cursor behavior*/
+	cursor:default;
+}
+
+#nav-container {
+	float: left;
+	margin-left: 20px;
+}
+
+.navbar-brand {
+	padding: 8px;
+}
+
+#main-title {
+	margin-top: 8px;
+	color: #F45858;
+	font-size: 30px;
+}
+
+#logo {
+	margin-left: -17px;
+	max-height: 50px;
+}
+
+#player-controls li a:visited{
+	text-decoration:none;
+}
+
+.now-playing {
+    margin-top: 20px;
+}
+
+.hidden {
+	display: none;
+}
+
 .img-responsive {
 	display: block;
 	height: auto;
 	max-width: 35%;
-}
-
-.now-playing img{
-    float: left;
-    margin-right: 20px;
-}
-
-#main-title {
-	font-size: 30px;
 }
 
 #upvote {
@@ -32,24 +61,6 @@ a {
 #downvote {
 	cursor: pointer;
 	margin-left: 10px;
-}
-
-#nav-container {
-	float: left;
-	margin-left: 20px;
-}
-
-#main-title {
-	margin-top: 8px;
-	color: #F45858;
-}
-
-.navbar-brand {
-	padding: 8px;
-}
-
-#logo {
-	margin-left: -17px;
 }
 
 #results .list-group-item {

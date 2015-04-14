@@ -161,6 +161,29 @@ app.controller('UsersCtrl', [
 			queue.getAll($scope.username);
 		}
 
+		$scope.hidePlayer = function() {
+			// hide the player
+			$('#player-container').toggleClass('hidden');
+
+			// change the button appearance
+			if ($('#player-container').hasClass('hidden')) {
+				$('#hide-player').text("Show Player ");
+				$('#hide-player').append("<span class='glyphicon glyphicon-eye-open'></span>");
+			}
+			else {
+				$('#hide-player').text("Hide Player ");
+				$('#hide-player').append("<span class='glyphicon glyphicon-eye-close'></span>");
+			}
+		}
+
+		$scope.applyActiveOnHover = function(event) {
+			$(event.target.parentElement).addClass("active");
+		}
+
+		$scope.removeActiveOnLeave = function(event) {
+			$(event.target.parentElement).removeClass("active");
+		}
+
 		$scope.refresh = function() {
 			queue.getAll($scope.username);
 		}
