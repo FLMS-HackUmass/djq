@@ -75,6 +75,16 @@
 							ng-mouseleave="removeActiveOnLeave($event)">
 							<a id="hide-player" href="">Hide Player <span class="glyphicon glyphicon-eye-close"></span></a>
 						</li>
+						<li ng-click="playPause()"
+							ng-mouseover="applyActiveOnHover($event)"
+							ng-mouseleave="removeActiveOnLeave($event)">
+							<a id="play-pause" href=""><span class="glyphicon glyphicon-play"></span></a>
+						</li>
+						<li ng-click="popSong()"
+							ng-mouseover="applyActiveOnHover($event)"
+							ng-mouseleave="removeActiveOnLeave($event)">
+							<a id="play-pause" href=""><span class="glyphicon glyphicon-fast-forward"></span></a>
+						</li>
 					</ul>
 					
 				</div><!--/.nav-collapse -->
