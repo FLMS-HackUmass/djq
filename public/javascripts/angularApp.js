@@ -167,14 +167,14 @@ app.controller('UsersCtrl', [
 				$('#player-container').removeClass('hidden');
 				$('#player-container').slideDown();
 				$('#hide-player').text("Hide Player ");
-				$('#hide-player').append("<span class='glyphicon glyphicon-eye-open'></span>");
+				$('#hide-player').append("<span class='glyphicon glyphicon-eye-close'></span>");
 			}
 			else {
 				$('#player-container').slideUp(function() {
 					$('#player-container').addClass('hidden');
 				});
 				$('#hide-player').text("Show Player ");
-				$('#hide-player').append("<span class='glyphicon glyphicon-eye-close'></span>");
+				$('#hide-player').append("<span class='glyphicon glyphicon-eye-open'></span>");
 			}
 		}
 
