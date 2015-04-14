@@ -190,10 +190,6 @@ app.controller('UsersCtrl', [
 			queue.getAll($scope.username);
 		}
 
-		$scope.addSong = function(index) {
-			console.log(index);
-		}
-
 		$scope.upvoteSong = function(song) {
 			queue.upvoteSong($scope.username, song);
 		}
