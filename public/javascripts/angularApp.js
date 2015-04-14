@@ -22,18 +22,7 @@ app.factory('users', ['$http', function($http) {
 app.factory('queue', ['$http', function($http) {
 	var o = {
 		queue: [],
-		playing:  {
-            "title": "Mark Ronson - Uptown Funk ft. Bruno Mars",
-            "url": "OPf0YbXqDm0",
-            "thumbnail": "https://i.ytimg.com/vi/OPf0YbXqDm0/default.jpg",
-            "_id": {
-                "$oid": "552adc586221bc1100777d1f"
-            },
-            "priority": 0,
-            "timestamp": {
-                "$date": "2015-04-12T20:58:00.014Z"
-            }
-        }
+		playing:  {}
 	};
 
 	var updateQueue = function(newQueue){
