@@ -103,7 +103,7 @@ router.post('/:username/popSong', function (req, res, next) {
 		if (err) return res.send(err);
 
 		var queue = dj.queue;
-		var song = queue.shift(song);
+		var song = queue.shift();
 
 		dj.save(function(err,result){
 			if(err) return res.send(err);
@@ -120,7 +120,7 @@ router.post('/:username/upvoteSong', function (req, res, next) {
 
 		var queue = dj.queue;
 		var song = req.body;
-		var song = searchForSong(queue, song._id);
+		song = searchForSong(queue, song._id);
 		song.priority += 1;
 		sortQueue(queue);
 
@@ -139,7 +139,7 @@ router.post('/:username/downvoteSong', function (req, res, next) {
 
 		var queue = dj.queue;
 		var song = req.body;
-		var song = searchForSong(queue, song._id);
+		song = searchForSong(queue, song._id);
 		song.priority += -1;
 		sortQueue(queue);
 
