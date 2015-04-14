@@ -36,31 +36,34 @@ app.factory('queue', ['$http', function($http) {
         }
 	};
 
+	var updateQueue = function(newQueue){
+		angular.copy(newQueue,o.queue);
+	};
+
 	o.getAll = function(username){
 		return $http.get('/users/' + username).success(function(data) {
-			angular.copy(data.queue, o.queue);
+			updateQueue(data.queue);
 	})};
 
 	o.addSong = function(username, song){
-		return $http.post('/'+username+'/addSong', song).success(function(){
-			o.getAll(username);
+		return $http.post('/'+username+'/addSong', song).success(function(data){
+			updateQueue(data);
 	})};
 
 	o.popSong = function(username){
 		return $http.post('/'+username+'/popSong').success(function(data){
 			angular.copy(data, o.playing);
-			// o.playing = data.url;
 			o.getAll(username);
 	})};
 
 	o.upvoteSong = function(username, song){
-		return $http.post('/'+username+'/upvoteSong', song).success(function(){
-			o.getAll(username);
+		return $http.post('/'+username+'/upvoteSong', song).success(function(data){
+			updateQueue(data);
 	})};
 
 	o.downvoteSong = function(username, song){
-		return $http.post('/'+username+'/downvoteSong', song).success(function(){
-			o.getAll(username);
+		return $http.post('/'+username+'/downvoteSong', song).success(function(data){
+			updateQueue(data);
 	})};
 
 	return o;
