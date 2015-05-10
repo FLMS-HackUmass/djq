@@ -3,11 +3,18 @@ body {
  	padding: 50px;
  	background-color:#16161D;
  	font-family:Roboto, sans-serif;
- 	color: #C6C6CD;
 }
 
 a {
  	color: #00B7FF;
+}
+
+.main-content > h1 {
+	color: #C6C6CD;
+}
+
+.main-content > p {
+	color: #C6C6CD;
 }
 
 .img-responsive {
