@@ -39,7 +39,18 @@ var sortQueue = function(queue){
 
 //load home page
 router.get('/', function (req, res, next) {
-	res.render('index');
+	res.render('index.html');
+});
+
+router.get('/admin', function (req, res, next) {
+	res.render('index.html');
+});
+
+// refactor view engine for multiple pages!!
+router.get('/views/:name', function(req, res) {
+	var name = req.params.name;
+	console.log("**** REQUEST MADE FOR " + name);
+	res.render(name);
 });
 
 router.get('/testuser', function(req, res, next) {
@@ -66,7 +77,7 @@ router.post('/users/add', function (req, res, next) {
 
 //load dj page
 router.get('/:username', function (req, res, next) {
-	res.render('index');
+	res.render('index.html');
 });
 
 //get specific user

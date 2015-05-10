@@ -65,20 +65,25 @@ app.config ([
 	function($stateProvider, $urlRouterProvider, $locationProvider) {
 
 		$stateProvider
-			.state('home', {
-				url: '/',
-				templateUrl: '/home.html',
-				controller: 'MainCtrl',
-				resolve: {
-					postPromise: ['users', function(users){
-						return users.getAll();
-					}]
-				}
+			.state('common', {
+				templateUrl: 'views/common.html',
+				abstract: true
 			})
-
+			.state('hi', {
+				url: '/',
+				parent: 'common',
+				templateUrl: 'views/hi.html'
+			})
+			.state('admin', {
+				url: '/admin',
+				parent: 'common',
+				templateUrl: 'views/admin.html',
+				controller: 'MainCtrl'
+			})
 			.state('users', {
 				url: '/:username',
-				templateUrl: '/dj.html',
+				parent: 'common',
+				templateUrl: 'views/dj.html',
 				controller: 'UsersCtrl',
 				resolve: {
 					postPromise: ['$stateParams', 'queue', function($stateParams, queue) {
