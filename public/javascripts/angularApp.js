@@ -78,7 +78,12 @@ app.config ([
 				url: '/admin',
 				parent: 'common',
 				templateUrl: 'views/admin.html',
-				controller: 'MainCtrl'
+				controller: 'MainCtrl',
+				resolve: {
+					postPromise: ['users', function(users){
+						return users.getAll();
+					}]
+				}
 			})
 			.state('users', {
 				url: '/:username',
