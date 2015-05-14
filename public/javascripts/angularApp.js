@@ -48,7 +48,6 @@ app.factory('queue', ['$http', function($http) {
 			//a player is already initialized and wont change to the new url
 			//so we instead load a video manually
 			if(player != undefined){
-				console.log(player);
 				player.loadVideoById(o.playing.url);
 			}
 			o.getAll(username);
