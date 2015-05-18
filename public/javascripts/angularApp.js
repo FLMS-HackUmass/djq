@@ -168,7 +168,14 @@ app.controller('UsersCtrl', [
 			queue.getAll($scope.username);
 			$('#results').hide();
 			$('#searchbar').val('');
+			$('#searchbar').blur();
 			queue.getAll($scope.username);
+		}
+
+		$scope.giveFocusToSearch = function() {
+			$('#myModal').on('shown.bs.modal', function() {
+				$('#searchbar').focus();
+			})
 		}
 
 		$scope.refresh = function() {

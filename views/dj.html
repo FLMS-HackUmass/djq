@@ -44,19 +44,19 @@
 			<button class="btn btn-default pull-right" type="button">
 				<span class="glyphicon glyphicon-refresh" ng-click="refresh()"></span> 
 			</button>
-			<button class="btn btn-default pull-right" type="button" data-toggle="modal" data-target=".search-songs">
+			<button class="btn btn-default pull-right" type="button" data-toggle="modal" data-target=".search-songs" ng-click="giveFocusToSearch()">
 				<span class="glyphicon glyphicon-plus"></span> 
 			</button>
 		</div>
 
 		<!--start modal-->
-		<div class="modal fade search-songs" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div id="myModal" class="modal fade search-songs" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg">
 				<div id="yt-search-songs" class="modal-content">
 					<!--start search-->
-					<div id="search" class="form-group" ng-click="mousePressed()" >
-						<input class="search-query form-control" type="text" id="searchbar" name="song_search" placeholder="Search for a song here." ng-keyup="keyPress()" autofocus />
-						<ul id="results" class="list-group" data-dismiss="modal">
+					<div id="search" class="form-group">
+						<input class="search-qu	ery form-control" type="text" id="searchbar" name="song_search" placeholder="Search for a song here." ng-keyup="keyPress()"/>
+						<ul id="results" class="list-group" data-dismiss="modal" ng-click="mousePressed()">
 
 						</ul>
 					</div>
