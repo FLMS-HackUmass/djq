@@ -39,9 +39,17 @@ app.factory('queue', ['$http', function($http) {
 			updateQueue(data);
 	})};
 
-	o.popSong = function(username){
+	o.popSong = function(username, player){
 		return $http.post('/'+username+'/popSong').success(function(data){
+			//the first time a song is popped,
+			//setting 'playing' will make the player initialize and start
 			angular.copy(data, o.playing);
+			//every other time,
+			//a player is already initialized and wont change to the new url
+			//so we instead load a video manually
+			if(player != undefined){
+				player.loadVideoById(o.playing.url);
+			}
 			o.getAll(username);
 	})};
 
@@ -180,11 +188,17 @@ app.controller('UsersCtrl', [
 		}
 
 		$scope.popSong = function() {
-			queue.popSong($scope.username,$scope);
+			queue.popSong($scope.username, $scope.player);
 		}
 
 		$scope.$on('youtube.player.ended', function ($event, player) {
     		$scope.popSong();
+  		});
+
+		//setting the player to a variable in the ejs file allows calls to an uninitialized player
+		//instead, we set the player whenever it is initialized
+  		$scope.$on('youtube.player.ready', function ($event, player) {
+    		$scope.player = player;
   		});
 	}
 ]);
