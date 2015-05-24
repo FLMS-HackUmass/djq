@@ -1,4 +1,4 @@
-var app = angular.module('djq', ['ui.router','youtube-embed'])
+var app = angular.module('djq', ['ui.router','youtube-embed', 'uiRouterStyles'])
 
 app.factory('users', ['$http', function($http) {
 	var o = {
@@ -77,10 +77,13 @@ app.config ([
 				templateUrl: 'views/common.html',
 				abstract: true
 			})
-			.state('hi', {
+			.state('home', {
 				url: '/',
 				parent: 'common',
-				templateUrl: 'views/hi.html'
+				templateUrl: 'views/home.html',
+				data: {
+					css: '/stylesheets/cover.css'
+				}
 			})
 			.state('admin', {
 				url: '/admin',

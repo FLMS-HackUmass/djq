@@ -4,7 +4,7 @@ function showResponse(response){
   var songPicker = {};
   var co = 0;
   res.forEach(function(video){
-    var djObj ={};
+    var djObj = {};
     djObj.title    = video.snippet.title;
     djObj.url      = video.id.videoId;
     djObj.thumbnail = video.snippet.thumbnails.default.url; 
@@ -60,7 +60,8 @@ function onYouTubeApiLoad(){
 function search(query){
   var req = gapi.client.youtube.search.list({
     part: 'snippet',
-    q: query
+    q: query,
+    type: 'video'
   });
 
   req.execute(onSearchResponse);
