@@ -60,7 +60,8 @@ function onYouTubeApiLoad(){
 function search(query){
   var req = gapi.client.youtube.search.list({
     part: 'snippet',
-    q: query
+    q: query,
+    type: 'video'
   });
 
   req.execute(onSearchResponse);
