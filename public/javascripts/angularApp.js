@@ -72,18 +72,27 @@ app.config ([
 	'$locationProvider',
 	function($stateProvider, $urlRouterProvider, $locationProvider) {
 
+		$urlRouterProvider.when("/", ['$state', '$match', function ($state, $match) {
+			$state.go('home');
+		}]);
+
 		$stateProvider
 			.state('common', {
 				templateUrl: 'views/common.html',
 				abstract: true
 			})
 			.state('home', {
-				url: '/',
+				url: '/home',
 				parent: 'common',
 				templateUrl: 'views/home.html',
 				data: {
-					css: '/stylesheets/cover.css'
+					//css: '/stylesheets/cover.css'
 				}
+			})
+			.state('about', {
+				url: '/about',
+				parent: 'common',
+				templateUrl: 'views/about.html'
 			})
 			.state('admin', {
 				url: '/admin',
@@ -107,7 +116,7 @@ app.config ([
 					}]
 				}
 			});
-
+	
 	$locationProvider.html5Mode(true);
 }]);
 
