@@ -19,7 +19,7 @@
 				<li class="active" id='username'><a href="/{{username}}">{{username}}</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li ng-click="slidePlayer()" 
+				<li ng-click="showOrHidePlayer()" 
 				ng-mouseover="applyActiveOnHover($event)"
 				ng-mouseleave="removeActiveOnLeave($event)">
 					<a id="hide-player" href="">Show Player <span class="glyphicon glyphicon-eye-open"></span></a>
@@ -75,7 +75,6 @@
 					<div id="search" class="form-group">
 						<input class="search-qu	ery form-control" type="text" id="searchbar" name="song_search" placeholder="Search for a song here." ng-keyup="keyPress()"/>
 						<ul id="results" class="list-group" data-dismiss="modal" ng-click="mousePressed()">
-
 						</ul>
 					</div>
 					<!--end search-->
