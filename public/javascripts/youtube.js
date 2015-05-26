@@ -4,7 +4,7 @@ function showResponse(response){
   var songPicker = {};
   var co = 0;
   res.forEach(function(video){
-    var djObj ={};
+    var djObj = {};
     djObj.title    = video.snippet.title;
     djObj.url      = video.id.videoId;
     djObj.thumbnail = video.snippet.thumbnails.default.url; 
@@ -15,7 +15,6 @@ function showResponse(response){
 }
 
 function chooseSong( songs ){
-  
   if(!songs || songs === undefined) {
     return;
   }
@@ -28,13 +27,13 @@ function chooseSong( songs ){
       +song.title
       +"</a>");
     $("#song" + t).click(function(event){
-          testLog(JSON.parse($(this).attr('song')));
+          addToQueue(JSON.parse($(this).attr('song')));
     });
   }
   
 }
 
-function testLog(song) {
+function addToQueue(song) {
   var username = window.location.href.split("/");
   username = username[username.length-1];
   console.log(song)

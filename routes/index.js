@@ -53,9 +53,9 @@ router.get('/views/:name', function(req, res) {
 	res.render(name);
 });
 
-router.get('/testuser', function(req, res, next) {
+/*router.get('/testuser', function(req, res, next) {
 	res.render('test');
-});
+});*/
 
 //get all users
 router.get('/users', function (req, res, next) {
@@ -115,6 +115,12 @@ router.post('/:username/popSong', function (req, res, next) {
 
 		var queue = dj.queue;
 		var song = queue.shift();
+		if (song === undefined) {
+			console.log(song + " is undefined");
+			song = {};
+		} else {
+			console.log(song);
+		}
 
 		dj.save(function(err,result){
 			if(err) return res.send(err);
