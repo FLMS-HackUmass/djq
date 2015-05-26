@@ -115,6 +115,12 @@ router.post('/:username/popSong', function (req, res, next) {
 
 		var queue = dj.queue;
 		var song = queue.shift();
+		if (song === undefined) {
+			console.log(song + " is undefined");
+			song = {};
+		} else {
+			console.log(song);
+		}
 
 		dj.save(function(err,result){
 			if(err) return res.send(err);
