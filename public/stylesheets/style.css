@@ -20,7 +20,6 @@ a {
 }
 
 #nav-container {
-	float: left;
 	margin-left: 20px;
 }
 
@@ -39,16 +38,16 @@ a {
 	max-height: 50px;
 }
 
+#player-container {
+	margin-bottom: 5px;
+}
+
 #player-controls li a:visited{
 	text-decoration:none;
 }
 
 .now-playing {
     margin-top: 20px;
-}
-
-.hidden {
-	display: none;
 }
 
 .img-responsive {

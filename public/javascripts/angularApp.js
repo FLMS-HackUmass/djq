@@ -185,9 +185,25 @@ app.controller('UsersCtrl', [
 		}
 
 		$scope.slidePlayer = function() {
+			if ($scope.player == undefined) {
+				sweetAlert({
+					title: "Choose a song first!",
+					text: "Start playing back a song and then you'll be able to view the player.",
+					type: "warning",
+					showCancelButton: true,
+					cancelButtonText: "OK",
+					confirmButtonText: "Choose Song",
+					confirmButtonColor: "#66AFE9",
+					closeOnConfirm: true	
+				}, function() {
+					$('#add-btn').trigger('click');
+				});
+			}
 			// change the button appearance
-			if ($('#player-container').hasClass('hidden')) {
-				$('#player-container').removeClass('hidden');
+			else if($('#player-container').css('display') === 'none') {
+				if ($('#player-container').hasClass('hidden')) {
+					$('#player-container').removeClass('hidden');
+				}
 				$('#player-container').slideDown();
 				$('#hide-player').text("Hide Player ");
 				$('#hide-player').append("<span class='glyphicon glyphicon-eye-close'></span>");

@@ -1,6 +1,6 @@
 <!--start navbar-->
-<nav class="navbar navbar-left navbar-inverse navbar-fixed-top">
-	<div id="nav-container" class="container">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div id="nav-container" class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 				<span class="sr-only">Toggle navigation</span>
@@ -18,17 +18,33 @@
 				<li id="about"><a href="/about">About</a></li>
 				<li class="active" id='username'><a href="/{{username}}">{{username}}</a></li>
 			</ul>
-		</div><!--/.nav-collapse -->
-	</div>
-</nav>
-<!--end navbar-->
+			<ul class="nav navbar-nav navbar-right">
+				<li ng-click="slidePlayer()" 
+				ng-mouseover="applyActiveOnHover($event)"
+				ng-mouseleave="removeActiveOnLeave($event)">
+					<a id="hide-player" href="">Show Player <span class="glyphicon glyphicon-eye-open"></span></a>
+				</li>
+				<li ng-click="playPause()"
+				ng-mouseover="applyActiveOnHover($event)"
+				ng-mouseleave="removeActiveOnLeave($event)">
+					<a id="play-pause" href=""><span class="glyphicon glyphicon-play"></span></a>
+				</li>
+				<li ng-click="popSong()"
+				ng-mouseover="applyActiveOnHover($event)"
+				ng-mouseleave="removeActiveOnLeave($event)">
+					<a id="play-pause" href=""><span class="glyphicon glyphicon-fast-forward"></span></a>
+				</li>
+			</ul>
+		</div> <!-- end .nav-collapse -->
+	</div> <!-- end .container-flued -->
+</nav> <!--end navbar-->
 
 <!--start container-->
 <div class="container">
 
 	<!--start player-->
 	<div class="now-playing">
-		<div class="container" style="display:inline">
+		<div id="player-container" style="display: none;">
 			<div class="embed-responsive embed-responsive-16by9">
 				<youtube-video player="player" player-vars="playerVars" video-id="playing.url"></youtube-video>
 			</div>
@@ -46,7 +62,7 @@
 			<button class="btn btn-default pull-right" type="button">
 				<span class="glyphicon glyphicon-refresh" ng-click="refresh()"></span> 
 			</button>
-			<button class="btn btn-default pull-right" type="button" data-toggle="modal" data-target=".search-songs" ng-click="giveFocusToSearch()">
+			<button id="add-btn" class="btn btn-default pull-right" type="button" data-toggle="modal" data-target=".search-songs" ng-click="giveFocusToSearch()">
 				<span class="glyphicon glyphicon-plus"></span> 
 			</button>
 		</div>
