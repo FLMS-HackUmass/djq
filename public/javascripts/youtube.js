@@ -1,26 +1,19 @@
 function showResponse(response){
   $('#results').empty();
   var res = response.items;
-//  console.log(res[0]);
   var songPicker = {};
   var co = 0;
   res.forEach(function(video){
-    var djObj ={};
+    var djObj = {};
     djObj.title    = video.snippet.title;
     djObj.url      = video.id.videoId;
     djObj.thumbnail = video.snippet.thumbnails.default.url; 
-  //  $('#results').append("<li class=\"song\">"+djObj.title+
-          // "<a href=https://www.youtube.com/watch?v="
-  //            djObj.url+"<img src="+djObj.thumbnail+"></a>" 
-  //                       +"</li>");
     songPicker[co.toString()] = djObj;
-   // console.log(songPicker[co.toString()]);
     co++;
   });
-  //console.log(songPicker);
   chooseSong(songPicker); 
 }
-var songz = [];
+
 function chooseSong( songs ){
   
   if(!songs || songs === undefined) {
@@ -30,7 +23,6 @@ function chooseSong( songs ){
   var t;
   for(t = 0; t < 5; t++){
     var song = songs[t.toString()];
-    songz[t] = song;
     $("#results").append("<a class='list-group-item' song='"+JSON.stringify(song)+"' id='song" + t + "'>"
       +"<img class='search-result img-thumbnail img-responsive' src='" + song.thumbnail + "'>"
       +song.title
@@ -63,20 +55,19 @@ function onClientLoad(){
 
 function onYouTubeApiLoad(){
   gapi.client.setApiKey('AIzaSyCGYJ3Qyz27hn0MKT7CSHlf7l9kB-qkLgY');
-//  search();
 }
 
 function search(query){
   var req = gapi.client.youtube.search.list({
     part: 'snippet',
-    q: query
+    q: query,
+    type: 'video'
   });
 
   req.execute(onSearchResponse);
 }
 
 function onSearchResponse(response) { 
-//  console.log(response);
   showResponse(response);
 }
 

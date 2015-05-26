@@ -1,4 +1,4 @@
-var app = angular.module('djq', ['ui.router','youtube-embed'])
+var app = angular.module('djq', ['ui.router','youtube-embed', 'uiRouterStyles'])
 
 app.factory('users', ['$http', function($http) {
 	var o = {
@@ -22,45 +22,45 @@ app.factory('users', ['$http', function($http) {
 app.factory('queue', ['$http', function($http) {
 	var o = {
 		queue: [],
-		playing:  {
-            "title": "Mark Ronson - Uptown Funk ft. Bruno Mars",
-            "url": "OPf0YbXqDm0",
-            "thumbnail": "https://i.ytimg.com/vi/OPf0YbXqDm0/default.jpg",
-            "_id": {
-                "$oid": "552adc586221bc1100777d1f"
-            },
-            "priority": 0,
-            "timestamp": {
-                "$date": "2015-04-12T20:58:00.014Z"
-            }
-        }
+		playing:  {}
+	};
+
+	var updateQueue = function(newQueue){
+		angular.copy(newQueue,o.queue);
 	};
 
 	o.getAll = function(username){
 		return $http.get('/users/' + username).success(function(data) {
-			angular.copy(data.queue, o.queue);
+			updateQueue(data.queue);
 	})};
 
 	o.addSong = function(username, song){
-		return $http.post('/'+username+'/addSong', song).success(function(){
-			o.getAll(username);
+		return $http.post('/'+username+'/addSong', song).success(function(data){
+			updateQueue(data);
 	})};
 
-	o.popSong = function(username){
+	o.popSong = function(username, player){
 		return $http.post('/'+username+'/popSong').success(function(data){
+			//the first time a song is popped,
+			//setting 'playing' will make the player initialize and start
 			angular.copy(data, o.playing);
-			// o.playing = data.url;
+			//every other time,
+			//a player is already initialized and wont change to the new url
+			//so we instead load a video manually
+			if(player != undefined){
+				player.loadVideoById(o.playing.url);
+			}
 			o.getAll(username);
 	})};
 
 	o.upvoteSong = function(username, song){
-		return $http.post('/'+username+'/upvoteSong', song).success(function(){
-			o.getAll(username);
+		return $http.post('/'+username+'/upvoteSong', song).success(function(data){
+			updateQueue(data);
 	})};
 
 	o.downvoteSong = function(username, song){
-		return $http.post('/'+username+'/downvoteSong', song).success(function(){
-			o.getAll(username);
+		return $http.post('/'+username+'/downvoteSong', song).success(function(data){
+			updateQueue(data);
 	})};
 
 	return o;
@@ -72,10 +72,32 @@ app.config ([
 	'$locationProvider',
 	function($stateProvider, $urlRouterProvider, $locationProvider) {
 
+		$urlRouterProvider.when("/", ['$state', '$match', function ($state, $match) {
+			$state.go('home');
+		}]);
+
 		$stateProvider
+			.state('common', {
+				templateUrl: 'views/common.html',
+				abstract: true
+			})
 			.state('home', {
-				url: '/',
-				templateUrl: '/home.html',
+				url: '/home',
+				parent: 'common',
+				templateUrl: 'views/home.html',
+				data: {
+					//css: '/stylesheets/cover.css'
+				}
+			})
+			.state('about', {
+				url: '/about',
+				parent: 'common',
+				templateUrl: 'views/about.html'
+			})
+			.state('admin', {
+				url: '/admin',
+				parent: 'common',
+				templateUrl: 'views/admin.html',
 				controller: 'MainCtrl',
 				resolve: {
 					postPromise: ['users', function(users){
@@ -83,10 +105,10 @@ app.config ([
 					}]
 				}
 			})
-
 			.state('users', {
 				url: '/:username',
-				templateUrl: '/dj.html',
+				parent: 'common',
+				templateUrl: 'views/dj.html',
 				controller: 'UsersCtrl',
 				resolve: {
 					postPromise: ['$stateParams', 'queue', function($stateParams, queue) {
@@ -94,7 +116,7 @@ app.config ([
 					}]
 				}
 			});
-
+	
 	$locationProvider.html5Mode(true);
 }]);
 
@@ -158,6 +180,7 @@ app.controller('UsersCtrl', [
 			queue.getAll($scope.username);
 			$('#results').hide();
 			$('#searchbar').val('');
+			$('#searchbar').blur();
 			queue.getAll($scope.username);
 		}
 
@@ -186,6 +209,12 @@ app.controller('UsersCtrl', [
 			$(event.target.parentElement).removeClass("active");
 		}
 
+		$scope.giveFocusToSearch = function() {
+			$('#myModal').on('shown.bs.modal', function() {
+				$('#searchbar').focus();
+			})
+		}
+
 		$scope.refresh = function() {
 			queue.getAll($scope.username);
 		}
@@ -199,11 +228,17 @@ app.controller('UsersCtrl', [
 		}
 
 		$scope.popSong = function() {
-			queue.popSong($scope.username,$scope);
+			queue.popSong($scope.username, $scope.player);
 		}
 
 		$scope.$on('youtube.player.ended', function ($event, player) {
     		$scope.popSong();
+  		});
+
+		//setting the player to a variable in the ejs file allows calls to an uninitialized player
+		//instead, we set the player whenever it is initialized
+  		$scope.$on('youtube.player.ready', function ($event, player) {
+    		$scope.player = player;
   		});
 	}
 ]);

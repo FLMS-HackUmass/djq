@@ -22,10 +22,7 @@ var searchForSong = function(queue, id){
 	return song;
 };
 
-var voteForSong = function(queue, song, vote){
-	//update song's priority
-	song.priority += vote;
-	//re-sort queue
+var sortQueue = function(queue){
 	queue.sort(function (a,b){
 		//priority > timestamp
 		if(a.priority===b.priority){
@@ -42,12 +39,23 @@ var voteForSong = function(queue, song, vote){
 
 //load home page
 router.get('/', function (req, res, next) {
-	res.render('index');
+	res.render('index.html');
 });
 
-router.get('/testuser', function(req, res, next) {
-	res.render('test');
+router.get('/admin', function (req, res, next) {
+	res.render('index.html');
 });
+
+// refactor view engine for multiple pages!!
+router.get('/views/:name', function(req, res) {
+	var name = req.params.name;
+	console.log("**** REQUEST MADE FOR " + name);
+	res.render(name);
+});
+
+/*router.get('/testuser', function(req, res, next) {
+	res.render('test');
+});*/
 
 //get all users
 router.get('/users', function (req, res, next) {
@@ -69,7 +77,7 @@ router.post('/users/add', function (req, res, next) {
 
 //load dj page
 router.get('/:username', function (req, res, next) {
-	res.render('index');
+	res.render('index.html');
 });
 
 //get specific user
@@ -90,10 +98,11 @@ router.post('/:username/addSong', function (req, res, next) {
 		var queue = dj.queue;
 		var song = req.body;
 		queue.push(song);
+		sortQueue(queue);
 
 		dj.save(function(err,result){
 			if(err) return res.send(err);
-			res.end();
+			res.json(result.queue);
 		});
 	});
 });
@@ -105,7 +114,7 @@ router.post('/:username/popSong', function (req, res, next) {
 		if (err) return res.send(err);
 
 		var queue = dj.queue;
-		var song = queue.shift(song);
+		var song = queue.shift();
 
 		dj.save(function(err,result){
 			if(err) return res.send(err);
@@ -122,12 +131,13 @@ router.post('/:username/upvoteSong', function (req, res, next) {
 
 		var queue = dj.queue;
 		var song = req.body;
-		var song = searchForSong(queue, song._id);
-		voteForSong(queue,song,1);
+		song = searchForSong(queue, song._id);
+		song.priority += 1;
+		sortQueue(queue);
 
-		dj.save(function(err){
+		dj.save(function(err, result){
 			if(err) return res.send(err);
-			res.end();
+			res.json(result.queue);
 		});
 	});
 });
@@ -140,12 +150,13 @@ router.post('/:username/downvoteSong', function (req, res, next) {
 
 		var queue = dj.queue;
 		var song = req.body;
-		var song = searchForSong(queue, song._id);
-		voteForSong(queue,song,-1);
+		song = searchForSong(queue, song._id);
+		song.priority += -1;
+		sortQueue(queue);
 
-		dj.save(function(err){
+		dj.save(function(err, result){
 			if(err) return res.send(err);
-			res.end();
+			res.json(result.queue);
 		});
 	});
 });

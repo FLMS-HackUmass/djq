@@ -23,13 +23,13 @@
   <body ng-app="djq">
 
   	<!-- DO NOT MODIFY (FOR NOW) -->
-  	<div class="row">
+  	<!--div class="row">
   		<div class="col-md-2 col-md-offset-2">
   			<ui-view></ui-view>
   		</div>
   	</div>
 
-  	<script type="text/ng-template" id="/home.html">
+  	<!--script type="text/ng-template" id="/home.html">
   		<div class="page-header">
   			<h1>djQ</h1>
   		</div>
@@ -44,7 +44,7 @@
         <input type="text" ng-model="email"></input>
   			<button type="submit">Submit</button>
   		</form>
-  	</script>
+  	</script-->
   	<!-- END DO NOT MODIFY -->
 
   	<script type="text/ng-template" id="/dj.html">
@@ -100,72 +100,72 @@
 	      <div class="now-playing">
 	          <div id="player-container" class="container" style="display:inline">
 	            <div class="embed-responsive embed-responsive-16by9">
-                <youtube-video class="embed-responsive-item" player="player" player-vars="playerVars" video-id="playing.url"></youtube-video>
+                <youtube-video player-vars="playerVars" video-id="playing.url"></youtube-video>
 	            </div>
 	          </div> 
 	      </div>
         <!--end player-->
 
-	          <!--panel-->
-		    <div class="panel panel-default">
-		        <!-- Default panel contents -->
-		        <div class="panel-heading clearfix">
-		            <div class="panel-title pull-left">
-		              <b>The Queue</b>
-		            </div>
-		            <button class="btn btn-default pull-right" type="button">
-		            	<span class="glyphicon glyphicon-refresh" ng-click="refresh()"></span> 
-		            </button>
-		            <button class="btn btn-default pull-right" type="button" data-toggle="modal" data-target=".search-songs">
-		               <span class="glyphicon glyphicon-plus"></span> 
-		            </button>
-		        </div>
+        <!--panel-->
+	    <div class="panel panel-default">
+	        <!-- Default panel contents -->
+	        <div class="panel-heading clearfix">
+	            <div class="panel-title pull-left">
+	              <b>The Queue</b>
+	            </div>
+	            <button class="btn btn-default pull-right" type="button">
+	            	<span class="glyphicon glyphicon-refresh" ng-click="refresh()"></span> 
+	            </button>
+	            <button class="btn btn-default pull-right" type="button" data-toggle="modal" data-target=".search-songs">
+	               <span class="glyphicon glyphicon-plus"></span> 
+	            </button>
+	        </div>
 
-		        <!--start modal-->
-				<div class="modal fade search-songs" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-					<div class="modal-dialog modal-lg">
-						<div id="yt-search-songs" class="modal-content">
-							<!--start search-->
-							<div id="search" class="form-group" ng-click="mousePressed()" >
-								<input class="search-query form-control" type="text" id="searchbar" name="song_search" placeholder="Search for a song here." ng-keyup="keyPress()" autofocus />
-								<ul id="results" class="list-group" data-dismiss="modal">
+	        <!--start modal-->
+			<div class="modal fade search-songs" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div id="yt-search-songs" class="modal-content">
+						<!--start search-->
+						<div id="search" class="form-group" ng-click="mousePressed()" >
+							<input class="search-query form-control" type="text" id="searchbar" name="song_search" placeholder="Search for a song here." ng-keyup="keyPress()" autofocus />
+							<ul id="results" class="list-group" data-dismiss="modal">
 
-								</ul>
-							</div>
-							<!--end search-->
+							</ul>
 						</div>
+						<!--end search-->
 					</div>
 				</div>
-				<!--end modal-->
+			</div>
+			<!--end modal-->
 
-		        <div class="panel-body">
-		            <!--table-->
-		            <table class="table table-striped">
-		                <thead>
-		                    <tr>
-		                        <!--th>#</th-->
-		                        <th class="col-md-1"></th>
-		                        <th class="col-md-2">Song</th>
-		                        <th class="col-md-1 text-right">Priority</th>
-		                    </tr>
-		                </thead>
-		                <tbody>
-		                    <tr ng-repeat="song in queue">
-		                        <!--td>{{song.$index + 1}}</td-->
-		                        <td><img src="{{song.thumbnail}}" height="50"/></td>
-		                        <td>{{song.title}}</td>
-		                        <td align="right">
-		                          <span id="upvote" class="glyphicon glyphicon-chevron-up" ng-click="upvoteSong(song)"></span>
-		                            {{song.priority}}
-		                          <span id="downvote" class="glyphicon glyphicon-chevron-down" ng-click="downvoteSong(song)"></span>
-		                        </td>
-		                    </tr>
-		                </tbody>
-		            </table>
-		            <!--end of table-->
-		        </div>
-		    </div>
-		    <!--end of panel-->
+	        <div class="panel-body">
+	            <!--table-->
+	            <table class="table table-striped">
+	                <thead>
+	                    <tr>
+	                        <!--th>#</th-->
+	                        <th class="col-md-1"></th>
+	                        <th class="col-md-2">Song</th>
+	                        <th class="col-md-1 text-right">Priority</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                    <tr ng-repeat="song in queue">
+	                        <!--td>{{song.$index + 1}}</td-->
+	                        <td><img src="{{song.thumbnail}}" height="50"/></td>
+	                        <td>{{song.title}}</td>
+	                        <td align="right">
+	                          <span id="upvote" class="glyphicon glyphicon-chevron-up" ng-click="upvoteSong(song)"></span>
+	                            {{song.priority}}
+	                          <span id="downvote" class="glyphicon glyphicon-chevron-down" ng-click="downvoteSong(song)"></span>
+	                        </td>
+	                    </tr>
+	                </tbody>
+	            </table>
+	            <!--end of table-->
+	        </div>
+	    </div>
+	    <!--end of panel-->
 
         <button id="remove" class="btn btn-danger" ng-click="popSong()">Play Next Song</button>
 
