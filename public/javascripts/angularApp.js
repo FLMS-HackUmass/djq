@@ -41,16 +41,25 @@ app.factory('queue', ['$http', function($http) {
 
 	o.popSong = function(username, player){
 		return $http.post('/'+username+'/popSong').success(function(data){
-			//the first time a song is popped,
-			//setting 'playing' will make the player initialize and start
+			
 			angular.copy(data, o.playing);
-			//every other time,
-			//a player is already initialized and wont change to the new url
-			//so we instead load a video manually
-			if(player != undefined){
-				player.loadVideoById(o.playing.url);
+			
+			// if we get back an empty JSON object, the queue is empty.
+			// so prompt to add more songs
+			if (JSON.stringify(data) === "{}"){
+				promptToAddSongs("No songs to play!");
 			}
-			o.getAll(username);
+			else {
+				//the first time a song is popped,
+				//setting 'playing' will make the player initialize and start
+				if(player != undefined){
+					player.loadVideoById(o.playing.url);
+				}
+				//every other time,
+				//a player is already initialized and wont change to the new url
+				//so we instead load a video manually
+				o.getAll(username);
+			}
 	})};
 
 	o.upvoteSong = function(username, song){
@@ -184,34 +193,91 @@ app.controller('UsersCtrl', [
 			queue.getAll($scope.username);
 		}
 
-		$scope.slidePlayer = function() {
+		$scope.showOrHidePlayer = function() {
+			
+			// if the player is null...
 			if ($scope.player == undefined) {
-				sweetAlert({
-					title: "Choose a song first!",
-					text: "Start playing back a song and then you'll be able to view the player.",
-					type: "warning",
-					showCancelButton: true,
-					cancelButtonText: "OK",
-					confirmButtonText: "Choose Song",
-					confirmButtonColor: "#66AFE9",
-					closeOnConfirm: true	
-				}, function() {
-					$('#add-btn').trigger('click');
-				});
+				// refresh the queue to see if any new songs have come in
+				queue.getAll($scope.username);
+
+				// if the queue is still empty, prompt the user to add songs to it
+				if ($scope.queue.length == 0) {
+					promptToAddSongs("No songs to play!");	
+				}
+				// otherwise, if the queue is not empty, let the user know that in order 
+				// to see the player, the player will begin playing back content
+				else {
+					promptToBeginPlayback();
+				}
 			}
 			// change the button appearance
 			else if($('#player-container').css('display') === 'none') {
-				if ($('#player-container').hasClass('hidden')) {
-					$('#player-container').removeClass('hidden');
-				}
-				$('#player-container').slideDown();
-				$('#hide-player').text("Hide Player ");
-				$('#hide-player').append("<span class='glyphicon glyphicon-eye-close'></span>");
+				slidePlayerDown();
+				flipShowPlayerButton(true);
 			}
 			else {
-				$('#player-container').slideUp(function() {
-					$('#player-container').addClass('hidden');
-				});
+				slidePlayerUp();
+				flipShowPlayerButton(false);
+			}
+		}
+
+		// called when there are no songs left in the queue and either the player tries to
+		// auto advance after a song has finished, or if the user tries to interact with the
+		// player (i.e., "Play Next Song", fast forward, or show the player)
+		promptToAddSongs = function(error_msg, callback) {
+			sweetAlert({
+				title: error_msg,
+				text: "That's okay! Click the \"Add song\" button below in order to add some music to your queue.",
+				type: "warning",
+				showCancelButton: true,
+				cancelButtonText: "Not yet",
+				confirmButtonText: "Add song",
+				confirmButtonColor: "#66AFE9",
+				closeOnConfirm: true
+			}, function() {
+				$('#myModal').modal('show');
+				$scope.giveFocusToSearch();
+			});
+		}
+
+		// called when there ARE songs in the queue, but the player has not been instantiated
+		// yet. this should only be used when they click "show player" to give the user some
+		// warning that the player can only be shown once the music begins to play
+		promptToBeginPlayback = function() {
+			sweetAlert({
+				title: "Begin playback?",
+				text: "In order to show the player, you must begin playback of your queued music. Would you like to start playing music?",
+				type: "warning",
+				showCancelButton: true,
+				cancelButtonText: "Not yet",
+				confirmButtonText: "Yes",
+				confirmButtonColor: "#66AFE9",
+				closeOnConfirm: true
+			}, function() {
+				slidePlayerDown($scope.popSong());
+			});
+		}
+
+		slidePlayerDown = function(callback) {
+			if ($('#player-container').hasClass('hidden')) {
+				$('#player-container').removeClass('hidden');
+			}
+			$('#player-container').slideDown(callback);
+		}
+
+		slidePlayerUp = function() {
+			$('#player-container').slideUp(function() {
+				$('#player-container').addClass('hidden');
+			});
+		}
+
+		// if player is showing, button should display option to hide it
+		// if player is hidden, button should display option to show it.
+		flipShowPlayerButton = function(isPlayerShown) {
+			if (isPlayerShown) {
+				$('#hide-player').text("Hide Player ");
+				$('#hide-player').append("<span class='glyphicon glyphicon-eye-close'></span>");
+			} else {
 				$('#hide-player').text("Show Player ");
 				$('#hide-player').append("<span class='glyphicon glyphicon-eye-open'></span>");
 			}
@@ -244,10 +310,17 @@ app.controller('UsersCtrl', [
 		}
 
 		$scope.popSong = function() {
+			/*if ($scope.queue.length == 0) {
+				promptToAddSongs("No songs to play!");
+			} else {*/
 			queue.popSong($scope.username, $scope.player);
+			//}
 		}
 
 		$scope.$on('youtube.player.ended', function ($event, player) {
+			/*if ($scope.queue.length == 0) {
+				promptToAddSongs("All out of songs!");
+			}*/
     		$scope.popSong();
   		});
 
