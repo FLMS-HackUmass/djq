@@ -53,9 +53,9 @@ router.get('/views/:name', function(req, res) {
 	res.render(name);
 });
 
-router.get('/testuser', function(req, res, next) {
+/*router.get('/testuser', function(req, res, next) {
 	res.render('test');
-});
+});*/
 
 //get all users
 router.get('/users', function (req, res, next) {
